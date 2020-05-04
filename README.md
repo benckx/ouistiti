@@ -4,7 +4,7 @@
 
 # About
 
-A basic camera system for a management game.
+A basic camera system for a management game for jMonkeyEngine.
 
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
