@@ -8,11 +8,41 @@ A basic camera system to for a management game.
 
 Example: https://www.youtube.com/watch?v=s6HhQtTJuFI
 
-Features include:
-* Move camera with holding right click
+## Features
+
+* Move camera by holding right click
 * Zoom in and out with the mouse wheel
 * Switch view with **V** (or use **T** for Top View, **S** for Side View, **I** for Isometric View)
 * Rotate view with **R** 
+
+# Examples
+
+Java Example: https://github.com/benckx/ouistiti/blob/master/src/test/java/TestCameraManagerJava.java
+
+Kotlin Example: https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager.kt
+
+# Usage
+
+```Java
+    public static class MyJavaApp extends SimpleApplication {
+
+        CameraManager cameraManager;
+
+        @Override
+        public void simpleInitApp() {
+            cameraManager = new CameraManager(this, ISO_VIEW);
+            cameraManager.loadDefaultKeyMappings();
+
+            inputManager.setCursorVisible(true);
+            flyCam.setEnabled(false);
+        }
+
+        @Override
+        public void simpleUpdate(float tpf) {
+            cameraManager.simpleUpdate();
+        }
+}
+```
 
 # Import with Gradle
 
