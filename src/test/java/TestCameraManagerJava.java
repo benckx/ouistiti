@@ -34,7 +34,7 @@ public class TestCameraManagerJava {
 
         @Override
         public void simpleUpdate(float tpf) {
-            cameraManager.simpleUpdate();
+            cameraManager.simpleUpdate(tpf);
         }
 
         public void addFloor() {

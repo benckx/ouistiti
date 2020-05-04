@@ -45,6 +45,13 @@ https://www.youtube.com/watch?v=s6HhQtTJuFI
 }
 ```
 
+Override these methods to customize the movement speed. Tpf is currently not included in the calculation. 
+
+```Kotlin
+    open fun cameraMovementSpeed(tpf: Float): Float
+    open fun cameraZoomSpeed(tpf: Float, value: Float): Float
+```
+
 # Examples
 
 In Java:<br/> 

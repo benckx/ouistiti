@@ -6,8 +6,8 @@ class CameraAnalogListener(val cameraManager: CameraManager) : AnalogListener {
 
     override fun onAnalog(name: String?, value: Float, tpf: Float) {
         when (name) {
-            WHEEL_UP -> cameraManager.cameraZoom(-value)
-            WHEEL_DOWN -> cameraManager.cameraZoom(value)
+            WHEEL_UP -> cameraManager.cameraZoom(-value, tpf)
+            WHEEL_DOWN -> cameraManager.cameraZoom(value, tpf)
             else -> println("Unknown $name")
         }
     }

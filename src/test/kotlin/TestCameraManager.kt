@@ -32,7 +32,7 @@ class MyApp : SimpleApplication() {
     }
 
     override fun simpleUpdate(tpf: Float) {
-        cameraManager.simpleUpdate()
+        cameraManager.simpleUpdate(tpf)
     }
 
     private fun addFloor() {
