@@ -6,9 +6,9 @@
 
 A basic camera system to for a management game.
 
-Example: https://www.youtube.com/watch?v=s6HhQtTJuFI
+![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
-## Features
+# Features
 
 * Move camera by holding right click
 * Zoom in and out with the mouse wheel
