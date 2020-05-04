@@ -1,5 +1,1 @@
-rootProject.name = 'everybody-loves-bricks'
-
-include('game-simulation')
-include('marmoset-camera-manager')
-include('graphics-engine-jme')
+rootProject.name = 'ouistiti'
