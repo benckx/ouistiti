@@ -4,7 +4,7 @@
 
 # About
 
-A basic camera system to for a management game.
+A basic camera system for a management game.
 
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
