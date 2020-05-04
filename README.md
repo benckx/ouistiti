@@ -20,6 +20,11 @@ https://www.youtube.com/watch?v=s6HhQtTJuFI
 # Usage
 
 ```Java
+    import be.encelade.ouistiti.CameraManager;
+    import com.jme3.app.SimpleApplication;
+    
+    // ...
+
     public static class MyJavaApp extends SimpleApplication {
 
         CameraManager cameraManager;
