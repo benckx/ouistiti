@@ -17,9 +17,11 @@ Example: https://www.youtube.com/watch?v=s6HhQtTJuFI
 
 # Examples
 
-Java Example: https://github.com/benckx/ouistiti/blob/master/src/test/java/TestCameraManagerJava.java
+In Java:<br/> 
+https://github.com/benckx/ouistiti/blob/master/src/test/java/TestCameraManagerJava.java
 
-Kotlin Example: https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager.kt
+In Kotlin:<br/>
+https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager.kt
 
 # Usage
 
