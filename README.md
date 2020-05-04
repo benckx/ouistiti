@@ -8,6 +8,8 @@ A basic camera system to for a management game.
 
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
+https://www.youtube.com/watch?v=s6HhQtTJuFI
+
 # Features
 
 * Move camera by holding right click
