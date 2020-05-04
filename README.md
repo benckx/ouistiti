@@ -4,7 +4,9 @@
 
 # About
 
-Basic camera to build a management game.
+A basic camera system to for a management game.
+
+Example: https://www.youtube.com/watch?v=s6HhQtTJuFI
 
 Features include:
 * Move camera with holding right click
