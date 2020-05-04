@@ -11,7 +11,7 @@ Example: https://www.youtube.com/watch?v=s6HhQtTJuFI
 Features include:
 * Move camera with holding right click
 * Zoom in and out with the mouse wheel
-* Switch view with **V** (top view or **T**, side view **S**, isometric view  **I**)
+* Switch view with **V** (or use **T** for Top View, **S** for Side View, **I** for Isometric View)
 * Rotate view with **R** 
 
 # Import with Gradle
