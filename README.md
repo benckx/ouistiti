@@ -17,14 +17,6 @@ https://www.youtube.com/watch?v=s6HhQtTJuFI
 * Switch view with **V** (or use **T** for Top View, **S** for Side View, **I** for Isometric View)
 * Rotate view with **R** 
 
-# Examples
-
-In Java:<br/> 
-https://github.com/benckx/ouistiti/blob/master/src/test/java/TestCameraManagerJava.java
-
-In Kotlin:<br/>
-https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager.kt
-
 # Usage
 
 ```Java
@@ -47,6 +39,14 @@ https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager
         }
 }
 ```
+
+# Examples
+
+In Java:<br/> 
+https://github.com/benckx/ouistiti/blob/master/src/test/java/TestCameraManagerJava.java
+
+In Kotlin:<br/>
+https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager.kt
 
 # Import with Gradle
 
