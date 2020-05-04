@@ -1,0 +1,10 @@
+.gradle/
+.idea
+/logs
+/build
+*/build
+/out
+/.idea/
+*.db
+*.so
+/saves
