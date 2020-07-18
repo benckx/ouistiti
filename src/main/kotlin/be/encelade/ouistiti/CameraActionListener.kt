@@ -1,6 +1,6 @@
 package be.encelade.ouistiti
 
-import be.encelade.ouistiti.CameraManager.ViewMode.*
+import be.encelade.ouistiti.ViewMode.*
 import com.jme3.input.controls.ActionListener
 
 class CameraActionListener(val cameraManager: CameraManager) : ActionListener {

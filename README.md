@@ -6,9 +6,11 @@
 
 A basic camera system for a management game for jMonkeyEngine.
 
+*Ouistiti* is French for marmoset. 
+
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
-https://www.youtube.com/watch?v=s6HhQtTJuFI
+https://www.youtube.com/watch?v=ltBLNQPvsjU
 
 # Features
 
@@ -40,7 +42,7 @@ https://www.youtube.com/watch?v=s6HhQtTJuFI
 
         @Override
         public void simpleUpdate(float tpf) {
-            cameraManager.simpleUpdate();
+            cameraManager.simpleUpdate(tpf);
         }
 }
 ```

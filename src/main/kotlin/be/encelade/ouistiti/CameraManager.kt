@@ -63,7 +63,7 @@ open class CameraManager(val rootNode: Node, val camera: Camera, val inputManage
 
     fun rotate() {
         if (clockWise) {
-            for (i in 1..3) incrementNbrRotations()
+            repeat(3) { incrementNbrRotations() }
         } else {
             incrementNbrRotations()
         }
@@ -153,13 +153,13 @@ open class CameraManager(val rootNode: Node, val camera: Camera, val inputManage
     }
 
     private fun baseLocationFor(viewMode: ViewMode): Vector3f {
-        val result = when (viewMode) {
+        val location = when (viewMode) {
             TOP_VIEW -> Vector3f(0f, 0f, 20f)
             SIDE_VIEW -> Vector3f(0f, -18f, 20f)
             ISO_VIEW -> Vector3f(-13f, -13f, 18f)
         }
 
-        return rotateForCurrentAngle(result)
+        return rotateForCurrentAngle(location)
     }
 
     private fun baseRotationFor(viewMode: ViewMode): Vector3f {
@@ -176,7 +176,8 @@ open class CameraManager(val rootNode: Node, val camera: Camera, val inputManage
 
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
         var result = Vector3f(input)
-        for (i in 1..nbrRotations) {
+
+        repeat(nbrRotations) {
             result = Vector3f(result.y, -result.x, result.z)
         }
 

@@ -1,11 +1,11 @@
 import be.encelade.ouistiti.CameraManager;
+import be.encelade.ouistiti.ViewMode;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
-import static be.encelade.ouistiti.CameraManager.ViewMode.ISO_VIEW;
 import static com.jme3.material.Materials.UNSHADED;
 
 public class TestCameraManagerJava {
@@ -22,7 +22,7 @@ public class TestCameraManagerJava {
 
         @Override
         public void simpleInitApp() {
-            cameraManager = new CameraManager(this, ISO_VIEW);
+            cameraManager = new CameraManager(this, ViewMode.ISO_VIEW);
             cameraManager.loadDefaultKeyMappings();
 
             inputManager.setCursorVisible(true);
