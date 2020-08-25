@@ -14,8 +14,8 @@ fun main() {
 
 class MyApp : SimpleApplication() {
 
-    val sizeX = 10
-    val sizeY = 8
+    private val sizeX = 10
+    private val sizeY = 8
 
     lateinit var cameraManager: CameraManager
 
@@ -23,12 +23,12 @@ class MyApp : SimpleApplication() {
         cameraManager = CameraManager(this)
         cameraManager.loadDefaultKeyMappings()
 
-        inputManager.setCursorVisible(true)
-        flyCam.setEnabled(false)
+        inputManager.isCursorVisible = true
+        flyCam.isEnabled = false
 
         addFloor()
         addGrid()
-        viewPort.setBackgroundColor(ColorRGBA(28 / 255f, 48 / 255f, 100 / 255f, 1f))
+        viewPort.backgroundColor = ColorRGBA(28 / 255f, 48 / 255f, 100 / 255f, 1f)
     }
 
     override fun simpleUpdate(tpf: Float) {
