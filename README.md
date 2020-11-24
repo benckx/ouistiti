@@ -69,5 +69,5 @@ https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager
     }
     
     dependencies {
-        implementation "com.github.benckx:ouistiti:1.0"
+        compile "com.github.benckx:ouistiti:1.1"
     }
