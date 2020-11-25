@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.ben-manes.versions" version "0.28.0"
+    id "com.github.ben-manes.versions" version "0.36.0"
     id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
 }
 
@@ -26,9 +26,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     testImplementation "org.jmonkeyengine:jme3-lwjgl:$jmeVersion"
-}
-
-test {
-    useJUnit()
-    maxHeapSize = '1G'
 }
