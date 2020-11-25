@@ -26,4 +26,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     testImplementation "org.jmonkeyengine:jme3-lwjgl:$jmeVersion"
+
+    // avoid warnings when running example
+    testImplementation "org.jmonkeyengine:jme3-blender:$jmeVersion"
+    testImplementation "org.jmonkeyengine:jme3-plugins:$jmeVersion"
+    testImplementation "org.jmonkeyengine:jme3-jogg:$jmeVersion"
 }
