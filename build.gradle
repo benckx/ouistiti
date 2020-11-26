@@ -6,18 +6,15 @@ plugins {
 repositories {
     mavenCentral()
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 def jmeVersion = "3.3.2-stable"
+def chimpUtilsVersion = "1.1"
 
 apply plugin: 'kotlin'
 apply plugin: 'idea'
 apply plugin: 'maven'
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
 
 dependencies {
     api "org.jmonkeyengine:jme3-core:$jmeVersion"
@@ -31,4 +28,7 @@ dependencies {
     testImplementation "org.jmonkeyengine:jme3-blender:$jmeVersion"
     testImplementation "org.jmonkeyengine:jme3-plugins:$jmeVersion"
     testImplementation "org.jmonkeyengine:jme3-jogg:$jmeVersion"
+
+    testImplementation "com.github.benckx.chimp-utils:chimp-utils-basics:$chimpUtilsVersion"
+    testImplementation "com.github.benckx.chimp-utils:chimp-utils-jme3:$chimpUtilsVersion"
 }

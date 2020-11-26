@@ -58,7 +58,7 @@ Override these methods to customize the movement speed. Tpf is currently not inc
 # Examples
 
 ## In Kotlin
-https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/TestCameraManager.kt
+https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
 
 ## In Java
 Sample project with Gradle configuration (Java 8):<br/>
