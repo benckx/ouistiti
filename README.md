@@ -10,7 +10,8 @@ A basic camera system for a management game for jMonkeyEngine.
 
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
-https://www.youtube.com/watch?v=ltBLNQPvsjU
+https://www.youtube.com/watch?v=Tm6QexsctfQ
+https://www.youtube.com/watch?v=qzs6Z_jM6mE
 
 # Features
 
