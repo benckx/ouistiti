@@ -2,7 +2,7 @@ package be.encelade.ouistiti
 
 import com.jme3.input.controls.AnalogListener
 
-class CameraAnalogListener(val cameraManager: CameraManager) : AnalogListener {
+class CameraAnalogListener(private val cameraManager: CameraManager) : AnalogListener {
 
     override fun onAnalog(name: String?, value: Float, tpf: Float) {
         when (name) {

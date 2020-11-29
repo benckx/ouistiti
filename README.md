@@ -73,3 +73,9 @@ https://github.com/benckx/ouistiti-java-sample
     dependencies {
         compile "com.github.benckx:ouistiti:1.1"
     }
+
+# Related Project
+Collection Kotlin of APIs and Helper:
+* https://github.com/benckx/chimp-utils
+
+If I manage to extract re-usable management game features from my game, I would move them to the ouistiti project, while more generic / engine-related components would be added here in the chimp-utils project.

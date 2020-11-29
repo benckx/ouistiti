@@ -22,8 +22,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    testImplementation "com.github.benckx.chimp-utils:chimp-utils-basics:$chimpUtilsVersion"
-    testImplementation "com.github.benckx.chimp-utils:chimp-utils-jme3:$chimpUtilsVersion"
+    implementation "com.github.benckx.chimp-utils:chimp-utils-basics:$chimpUtilsVersion"
+    implementation "com.github.benckx.chimp-utils:chimp-utils-jme3:$chimpUtilsVersion"
 
     testImplementation "org.jmonkeyengine:jme3-lwjgl:$jmeVersion"
     testImplementation "org.jmonkeyengine:jme3-blender:$jmeVersion"

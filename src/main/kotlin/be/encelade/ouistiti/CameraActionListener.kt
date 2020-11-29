@@ -3,7 +3,7 @@ package be.encelade.ouistiti
 import be.encelade.ouistiti.ViewMode.*
 import com.jme3.input.controls.ActionListener
 
-class CameraActionListener(val cameraManager: CameraManager) : ActionListener {
+class CameraActionListener(private val cameraManager: CameraManager) : ActionListener {
 
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
         if (name == MOUSE_RIGHT_CLICK) {
