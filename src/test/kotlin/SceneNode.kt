@@ -1,5 +1,6 @@
 import be.encelade.chimp.material.UnshadedMaterial
 import be.encelade.chimp.utils.ColorHelperUtils.ColorRGBA
+import be.encelade.chimp.utils.NodeHelperUtils.attachChildren
 import com.jme3.math.ColorRGBA.Blue
 import com.jme3.math.FastMath.HALF_PI
 import com.jme3.scene.Geometry
@@ -10,16 +11,15 @@ import com.jme3.scene.shape.Box
 class SceneNode : Node("MY_SCENE") {
 
     init {
-        attachChild(makeFloor())
-        attachChild(makeGrid())
+        attachChildren(makeFloor(), makeGrid())
     }
 
     private companion object {
 
-        private const val sizeX = 10
-        private const val sizeY = 8
+        const val sizeX = 10
+        const val sizeY = 8
 
-        private fun makeFloor(): Geometry {
+        fun makeFloor(): Geometry {
             val floorMat = UnshadedMaterial()
             floorMat.setColor(ColorRGBA(155, 164, 193))
 
@@ -29,7 +29,7 @@ class SceneNode : Node("MY_SCENE") {
             return floor
         }
 
-        private fun makeGrid(): Geometry {
+        fun makeGrid(): Geometry {
             val gridMat = UnshadedMaterial()
             gridMat.setColor(Blue)
 
