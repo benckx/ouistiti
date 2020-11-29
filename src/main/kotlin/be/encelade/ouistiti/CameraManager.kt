@@ -32,14 +32,14 @@ class CameraManager(private val rootNode: Node,
                     flyByCam: FlyByCamera,
                     private val inputManager: InputManager,
                     private var viewMode: ViewMode = ISO_VIEW,
-                    var cameraSpeedCalculator: CameraSpeedCalculator) {
+                    private val cameraSpeedCalculator: CameraSpeedCalculator) {
 
     constructor(app: SimpleApplication,
                 viewMode: ViewMode = ISO_VIEW,
                 cameraSpeedCalculator: CameraSpeedCalculator = DefaultCameraSpeedCalculator()) :
             this(app.rootNode, app.camera, app.flyByCamera, app.inputManager, viewMode, cameraSpeedCalculator)
 
-    var isRightClickPressed = false
+    internal var isRightClickPressed = false
 
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
@@ -160,8 +160,8 @@ class CameraManager(private val rootNode: Node,
         var cameraMovement = Vector3f(mouseManager.deltaX, mouseManager.deltaY, 0f)
 
         if (viewMode == ISO_VIEW) {
-            val rotation = Vector3f(cameraMovement.y, -cameraMovement.x, 0f)
-            cameraMovement += rotation
+            // add 1 rotation
+            cameraMovement += Vector3f(cameraMovement.y, -cameraMovement.x, 0f)
         }
 
         // we multiply by -1 at the end because we want to move in the opposite direction of the mouse
@@ -182,10 +182,10 @@ class CameraManager(private val rootNode: Node,
     private fun baseRotationFor(viewMode: ViewMode): Vector3f {
         val topView = Vector3f(PI, 0f, PI)
 
-        val baseRotation = when (viewMode) {
-            TOP_VIEW -> topView
-            SIDE_VIEW -> topView + Vector3f(-QUARTER_PI, 0f, 0f)
-            ISO_VIEW -> topView + Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
+        val baseRotation = topView + when (viewMode) {
+            TOP_VIEW -> Vector3f(0f, 0f, 0f)
+            SIDE_VIEW -> Vector3f(-QUARTER_PI, 0f, 0f)
+            ISO_VIEW -> Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
         }
 
         return baseRotation + Vector3f(0f, 0f, -(nbrRotations * HALF_PI))

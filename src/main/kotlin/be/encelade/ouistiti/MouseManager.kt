@@ -3,7 +3,7 @@ package be.encelade.ouistiti
 import com.jme3.input.InputManager
 import com.jme3.math.Vector2f
 
-class MouseManager(val inputManager: InputManager) {
+class MouseManager(private val inputManager: InputManager) {
 
     private var previousCursorPosition: Vector2f? = null
 

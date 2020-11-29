@@ -35,10 +35,7 @@ A basic camera system for a management game for jMonkeyEngine.
         @Override
         public void simpleInitApp() {
             cameraManager = new CameraManager(this, ISO_VIEW);
-            cameraManager.loadDefaultKeyMappings();
-
-            inputManager.setCursorVisible(true);
-            flyCam.setEnabled(false);
+            cameraManager.addDefaultKeyMappings();
         }
 
         @Override
@@ -46,13 +43,6 @@ A basic camera system for a management game for jMonkeyEngine.
             cameraManager.simpleUpdate(tpf);
         }
 }
-```
-
-Override these methods to customize the movement speed. Tpf is currently not included in the calculation. 
-
-```Kotlin
-    open fun cameraMovementSpeed(tpf: Float): Float
-    open fun cameraZoomSpeed(tpf: Float, value: Float): Float
 ```
 
 # Examples
@@ -71,8 +61,14 @@ https://github.com/benckx/ouistiti-java-sample
     }
     
     dependencies {
-        compile "com.github.benckx:ouistiti:1.1"
+        compile "com.github.benckx:ouistiti:1.2"
     }
+
+# Change log
+## Version 1.2
+* Use `chimp-utils` project
+* Update Kotlin from 1.4.10 to 1.4.20
+* Add more customizations settings (split `CameraSpeedCalculator`, split the different default key mappings, etc.)
 
 # Related Project
 Collection Kotlin of APIs and Helper:
