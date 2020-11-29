@@ -20,15 +20,19 @@ class DemoSimpleApp : SimpleApplication() {
     lateinit var cameraManager: CameraManager
 
     override fun simpleInitApp() {
+        // chimp-utils API
         MaterialDefinitions.load(assetManager)
 
+        // init CameraManager
         cameraManager = CameraManager(this)
         cameraManager.loadDefaultKeyMappings()
 
+        // TODO: move this inside the lib set up
         inputManager.isCursorVisible = true
         flyCam.isEnabled = false
-        viewPort.backgroundColor = ColorRGBA("#1c3064")
 
+        // build scene
+        viewPort.backgroundColor = ColorRGBA("#1c3064")
         rootNode.attachChild(SceneNode())
     }
 
