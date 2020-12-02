@@ -25,6 +25,11 @@ A basic camera system for a management game for jMonkeyEngine.
 ## Kotlin
 
 ```kotlin
+import be.encelade.ouistiti.CameraManager
+import com.jme3.app.SimpleApplication
+
+//..
+
 class DemoSimpleApp : SimpleApplication() {
 
     lateinit var cameraManager: CameraManager
