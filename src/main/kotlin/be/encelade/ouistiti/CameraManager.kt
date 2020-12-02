@@ -32,7 +32,7 @@ class CameraManager(private val rootNode: Node,
                     flyByCam: FlyByCamera,
                     private val inputManager: InputManager,
                     private var viewMode: ViewMode = ISO_VIEW,
-                    private val cameraSpeedCalculator: CameraSpeedCalculator) {
+                    private val cameraSpeedCalculator: CameraSpeedCalculator = DefaultCameraSpeedCalculator()) {
 
     constructor(app: SimpleApplication,
                 viewMode: ViewMode = ISO_VIEW,
