@@ -22,6 +22,26 @@ A basic camera system for a management game for jMonkeyEngine.
 
 # Usage
 
+## Kotlin
+
+```kotlin
+class DemoSimpleApp : SimpleApplication() {
+
+    lateinit var cameraManager: CameraManager
+
+    override fun simpleInitApp() {
+        cameraManager = CameraManager(this)
+        cameraManager.addDefaultKeyMappings()
+    }
+
+    override fun simpleUpdate(tpf: Float) {
+        cameraManager.simpleUpdate(tpf)
+    }
+}
+```
+
+## Java
+
 ```Java
     import be.encelade.ouistiti.CameraManager;
     import com.jme3.app.SimpleApplication;
@@ -43,6 +63,23 @@ A basic camera system for a management game for jMonkeyEngine.
             cameraManager.simpleUpdate(tpf);
         }
 }
+```
+
+# Configuration
+
+## Camera Speed
+
+Implement the following interface and pass it as parameter of `CameraManager` to customize the movement speed.
+
+```kotlin
+interface CameraSpeedCalculator {
+
+    fun cameraMovementSpeed(tpf: Float, cameraNode: CameraNode): Float
+
+    fun cameraZoomSpeed(tpf: Float, value: Float, cameraNode: CameraNode): Float
+
+}
+
 ```
 
 # Examples
