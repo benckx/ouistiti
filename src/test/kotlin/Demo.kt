@@ -1,6 +1,7 @@
 import be.encelade.chimp.material.MaterialDefinitions
 import be.encelade.chimp.utils.ColorHelperUtils.ColorRGBA
 import be.encelade.ouistiti.CameraManager
+import be.encelade.ouistiti.ViewMode.ISO_VIEW
 import com.jme3.app.SimpleApplication
 import com.jme3.system.AppSettings
 
@@ -18,14 +19,14 @@ fun main() {
 
 class DemoSimpleApp : SimpleApplication() {
 
-    lateinit var cameraManager: CameraManager
+    private lateinit var cameraManager: CameraManager
 
     override fun simpleInitApp() {
         // init chimp-utils API for materials
         MaterialDefinitions.load(assetManager)
 
         // init CameraManager
-        cameraManager = CameraManager(this)
+        cameraManager = CameraManager(this, viewMode = ISO_VIEW)
         cameraManager.addDefaultKeyMappings()
 
         // build scene

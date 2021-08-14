@@ -51,6 +51,14 @@ class CameraManager(private val rootNode: Node,
     private var angle: Float = 0f
     private var clockWise = true
 
+    private val topViewRotation = Vector3f(PI, 0f, PI)
+
+    private val rotationFromTopView = mapOf(
+            TOP_VIEW to Vector3f(0f, 0f, 0f),
+            SIDE_VIEW to Vector3f(-QUARTER_PI, 0f, 0f),
+            ISO_VIEW to Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
+    )
+
     init {
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
@@ -96,7 +104,7 @@ class CameraManager(private val rootNode: Node,
         if (mouseManager.isCursorMoving()) {
             if (isRightClickPressed) {
                 if (isLeftControlPressed) {
-                    rotateByAngle(tpf)
+                    rotateByAngle(tpf * (mouseManager.deltaX + mouseManager.deltaY))
                 } else {
                     rightClickMovement(tpf)
                 }
@@ -104,8 +112,15 @@ class CameraManager(private val rootNode: Node,
         }
     }
 
-    private fun rotateByAngle(angle : Float) {
-        println("rotate by $angle")
+    private fun rotateByAngle(angle: Float) {
+        val baseRotation = baseRotationWithCurrentAngle(viewMode)
+        val revertBaseRotation = baseRotation.mult(-1f)
+
+        cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
+        cameraNode.rotate(0f, 0f, angle)
+        cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
+
+        this.angle -= angle
     }
 
     fun rotate() {
@@ -151,7 +166,7 @@ class CameraManager(private val rootNode: Node,
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        val rotation = baseRotationFor(viewMode)
+        val rotation = baseRotationWithCurrentAngle(viewMode)
         cameraNode.rotate(rotation.x, rotation.y, rotation.z)
 
         cameraNode.camera.location = Vector3f(0f, 0f, 0f)
@@ -183,16 +198,12 @@ class CameraManager(private val rootNode: Node,
         return rotateForCurrentAngle(location)
     }
 
-    private fun baseRotationFor(viewMode: ViewMode): Vector3f {
-        val topView = Vector3f(PI, 0f, PI)
+    private fun baseRotation(viewMode: ViewMode): Vector3f {
+        return topViewRotation + rotationFromTopView[viewMode]!!
+    }
 
-        val baseRotation = topView + when (viewMode) {
-            TOP_VIEW -> Vector3f(0f, 0f, 0f)
-            SIDE_VIEW -> Vector3f(-QUARTER_PI, 0f, 0f)
-            ISO_VIEW -> Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
-        }
-
-        return baseRotation + Vector3f(0f, 0f, -angle)
+    private fun baseRotationWithCurrentAngle(viewMode: ViewMode): Vector3f {
+        return baseRotation(viewMode) + Vector3f(0f, 0f, -angle)
     }
 
     /**
