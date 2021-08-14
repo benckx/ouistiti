@@ -2,8 +2,8 @@ package be.encelade.ouistiti
 
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
-
 import be.encelade.ouistiti.CameraActionListener.Companion.ISO_VIEW_KEY
+import be.encelade.ouistiti.CameraActionListener.Companion.LEFT_CONTROL
 import be.encelade.ouistiti.CameraActionListener.Companion.MOUSE_RIGHT_CLICK
 import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE
 import be.encelade.ouistiti.CameraActionListener.Companion.SIDE_VIEW_KEY
@@ -40,6 +40,7 @@ class CameraManager(private val rootNode: Node,
             this(app.rootNode, app.camera, app.flyByCamera, app.inputManager, viewMode, cameraSpeedCalculator)
 
     internal var isRightClickPressed = false
+    internal var isLeftControlPressed = false
 
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
@@ -47,35 +48,37 @@ class CameraManager(private val rootNode: Node,
     private var mouseManager = MouseManager(inputManager)
     private var cameraNode: CameraNode = resetCameraNode(viewMode)
 
-    private var nbrRotations: Int = 0
+    private var angle: Float = 0f
     private var clockWise = true
 
     init {
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
+        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, LEFT_CONTROL, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
     }
 
     fun addDefaultKeyMappings() {
         addDefaultRightClickInputMappings()
+        addControlRotateInputMappings()
         addDefaultRotateInputMappings()
         addDefaultSwitchViewInputMappings()
         addDefaultMouseWheelInputMappings()
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
     fun addDefaultRightClickInputMappings() {
         inputManager.addMapping(MOUSE_RIGHT_CLICK, MouseButtonTrigger(BUTTON_RIGHT))
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
+    fun addControlRotateInputMappings() {
+        inputManager.addMapping(LEFT_CONTROL, KeyTrigger(KEY_LCONTROL))
+    }
+
     fun addDefaultRotateInputMappings() {
         inputManager.addMapping(ROTATE, KeyTrigger(KEY_R), KeyTrigger(KEY_O))
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
     fun addDefaultSwitchViewInputMappings() {
         inputManager.addMapping(SWITCH_VIEW, KeyTrigger(KEY_V))
         inputManager.addMapping(TOP_VIEW_KEY, KeyTrigger(KEY_T))
@@ -83,7 +86,6 @@ class CameraManager(private val rootNode: Node,
         inputManager.addMapping(ISO_VIEW_KEY, KeyTrigger(KEY_I))
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
     fun addDefaultMouseWheelInputMappings() {
         inputManager.addMapping(WHEEL_UP, MouseAxisTrigger(AXIS_WHEEL, false))
         inputManager.addMapping(WHEEL_DOWN, MouseAxisTrigger(AXIS_WHEEL, true))
@@ -91,14 +93,18 @@ class CameraManager(private val rootNode: Node,
 
     fun simpleUpdate(tpf: Float) {
         mouseManager.simpleUpdate()
-        if (isRightClickPressed && mouseManager.isCursorMoving()) {
-            rightClickMovement(tpf)
+        if (mouseManager.isCursorMoving()) {
+            if (isRightClickPressed) {
+                rightClickMovement(tpf)
+            } else if (isLeftControlPressed) {
+                angle += mouseManager.deltaX
+            }
         }
     }
 
     fun rotate() {
         repeat(if (clockWise) 3 else 1) {
-            incrementNbrRotations()
+            angle += HALF_PI
         }
 
         if (viewMode == TOP_VIEW) {
@@ -131,14 +137,6 @@ class CameraManager(private val rootNode: Node,
             }
 
             cameraNode.move(rotateForCurrentAngle(cameraMovement))
-        }
-    }
-
-    private fun incrementNbrRotations() {
-        if (nbrRotations == 3) {
-            nbrRotations = 0
-        } else {
-            nbrRotations++
         }
     }
 
@@ -188,17 +186,16 @@ class CameraManager(private val rootNode: Node,
             ISO_VIEW -> Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
         }
 
-        return baseRotation + Vector3f(0f, 0f, -(nbrRotations * HALF_PI))
+        return baseRotation + Vector3f(0f, 0f, -angle)
     }
 
+    /**
+     * Found on https://en.wikipedia.org/wiki/Rotation_of_axes
+     */
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
-        var result = Vector3f(input)
-
-        repeat(nbrRotations) {
-            result = Vector3f(result.y, -result.x, result.z)
-        }
-
-        return result
+        val x = input.x * cos(angle) + input.y * sin(angle)
+        val y = -(input.x * sin(angle)) + input.y * cos(angle)
+        return Vector3f(x, y, input.z)
     }
 
     private companion object {

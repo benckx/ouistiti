@@ -6,8 +6,10 @@ import com.jme3.input.controls.ActionListener
 class CameraActionListener(private val cameraManager: CameraManager) : ActionListener {
 
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
-        if (name == MOUSE_RIGHT_CLICK) {
-            cameraManager.isRightClickPressed = isPressed
+        when (name) {
+            MOUSE_RIGHT_CLICK -> cameraManager.isRightClickPressed = isPressed
+            LEFT_CONTROL -> cameraManager.isLeftControlPressed = isPressed
+
         }
 
         if (isPressed) {
@@ -24,6 +26,7 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
     companion object {
 
         const val MOUSE_RIGHT_CLICK = "MOUSE_RIGHT_CLICK"
+        const val LEFT_CONTROL = "LEFT_CONTROL"
 
         const val ROTATE = "ROTATE"
 
@@ -33,4 +36,5 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
         const val ISO_VIEW_KEY = "ISO_VIEW"
 
     }
+
 }
