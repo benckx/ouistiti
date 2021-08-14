@@ -2,11 +2,10 @@ package be.encelade.ouistiti
 
 import be.encelade.ouistiti.CameraManager.Companion.ISO_VIEW_KEY
 import be.encelade.ouistiti.CameraManager.Companion.MOVEMENT_KEY_PRESSED_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CAMERA_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CAMERA_AXIS_KEY_PRESSED_ACTION
 import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CLOCKWISE_KEY_PRESSED_ACTION
 import be.encelade.ouistiti.CameraManager.Companion.ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_WORLD_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_WORLD_AXIS_KEY_PRESSED_ACTION
 import be.encelade.ouistiti.CameraManager.Companion.SIDE_VIEW_KEY
 import be.encelade.ouistiti.CameraManager.Companion.SWITCH_VIEW
 import be.encelade.ouistiti.CameraManager.Companion.TOP_VIEW_KEY
@@ -18,8 +17,8 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
         when (name) {
             MOVEMENT_KEY_PRESSED_ACTION -> cameraManager.isMovementClickPressed = isPressed
-            ROTATE_WORLD_KEY_PRESSED_ACTION -> cameraManager.isRotationMovementPressed = isPressed
-            ROTATE_CAMERA_KEY_PRESSED_ACTION -> cameraManager.isCameraRotationMovementPressed = isPressed
+            ROTATE_WORLD_AXIS_KEY_PRESSED_ACTION -> cameraManager.isRotationMovementPressed = isPressed
+            ROTATE_CAMERA_AXIS_KEY_PRESSED_ACTION -> cameraManager.isCameraRotationMovementPressed = isPressed
             ROTATE_CLOCKWISE_KEY_PRESSED_ACTION -> cameraManager.isRotationClockwisePressed = isPressed
             ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION -> cameraManager.isRotationCounterClockwisePressed = isPressed
         }
@@ -30,7 +29,6 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
                 TOP_VIEW_KEY -> cameraManager.switchViewMode(TOP_VIEW)
                 SIDE_VIEW_KEY -> cameraManager.switchViewMode(SIDE_VIEW)
                 ISO_VIEW_KEY -> cameraManager.switchViewMode(ISO_VIEW)
-                ROTATE -> cameraManager.rotate()
             }
         }
     }
