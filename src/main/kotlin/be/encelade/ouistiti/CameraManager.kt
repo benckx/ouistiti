@@ -60,7 +60,7 @@ class CameraManager(private val rootNode: Node,
 
     fun addDefaultKeyMappings() {
         addDefaultRightClickInputMappings()
-        addDefaultRotatationInputMappings()
+        addDefaultRotationInputMappings()
         addDefaultSwitchViewInputMappings()
         addDefaultMouseWheelInputMappings()
     }
@@ -69,7 +69,7 @@ class CameraManager(private val rootNode: Node,
         inputManager.addMapping(MOVEMENT_KEY_PRESSED_ACTION, MouseButtonTrigger(BUTTON_RIGHT))
     }
 
-    fun addDefaultRotatationInputMappings() {
+    fun addDefaultRotationInputMappings() {
         inputManager.addMapping(ROTATE_WORLD_AXIS_KEY_PRESSED_ACTION, KeyTrigger(KEY_LCONTROL))
         inputManager.addMapping(ROTATE_CAMERA_AXIS_KEY_PRESSED_ACTION, KeyTrigger(KEY_LSHIFT))
         inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION, KeyTrigger(KEY_B))
