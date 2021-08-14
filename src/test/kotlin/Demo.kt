@@ -9,7 +9,8 @@ fun main() {
     val settings = AppSettings(true)
     settings.isFullscreen = false
     settings.isVSync = false
-    settings.setResolution(1280, 720)
+    settings.title = "ouistiti demo"
+    settings.setResolution(1920, 1080)
 
     val simpleApp = DemoSimpleApp()
     simpleApp.setSettings(settings)

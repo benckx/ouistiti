@@ -3,10 +3,10 @@ package be.encelade.ouistiti
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
 import be.encelade.ouistiti.CameraActionListener.Companion.ISO_VIEW_KEY
-import be.encelade.ouistiti.CameraActionListener.Companion.LEFT_ALT
-import be.encelade.ouistiti.CameraActionListener.Companion.LEFT_CONTROL
 import be.encelade.ouistiti.CameraActionListener.Companion.MOUSE_RIGHT_CLICK
 import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE
+import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_CAMERA
+import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_WORLD
 import be.encelade.ouistiti.CameraActionListener.Companion.SIDE_VIEW_KEY
 import be.encelade.ouistiti.CameraActionListener.Companion.SWITCH_VIEW
 import be.encelade.ouistiti.CameraActionListener.Companion.TOP_VIEW_KEY
@@ -40,9 +40,9 @@ class CameraManager(private val rootNode: Node,
                 cameraSpeedCalculator: CameraSpeedCalculator = DefaultCameraSpeedCalculator()) :
             this(app.rootNode, app.camera, app.flyByCamera, app.inputManager, viewMode, cameraSpeedCalculator)
 
-    internal var isRightClickPressed = false
-    internal var isLeftControlPressed = false
-    internal var isLeftAltPressed = false
+    internal var isMovementClickPressed = false
+    internal var isRotationMovementPressed = false
+    internal var isCameraRotationMovementPressed = false
 
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
@@ -57,7 +57,7 @@ class CameraManager(private val rootNode: Node,
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, LEFT_CONTROL, LEFT_ALT, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
+        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, ROTATE_WORLD, ROTATE_CAMERA, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
     }
 
@@ -74,8 +74,8 @@ class CameraManager(private val rootNode: Node,
     }
 
     fun addControlRotateInputMappings() {
-        inputManager.addMapping(LEFT_CONTROL, KeyTrigger(KEY_LCONTROL))
-        inputManager.addMapping(LEFT_ALT, KeyTrigger(KEY_LSHIFT))
+        inputManager.addMapping(ROTATE_WORLD, KeyTrigger(KEY_LCONTROL))
+        inputManager.addMapping(ROTATE_CAMERA, KeyTrigger(KEY_LSHIFT))
     }
 
     fun addDefaultRotateInputMappings() {
@@ -97,29 +97,33 @@ class CameraManager(private val rootNode: Node,
     fun simpleUpdate(tpf: Float) {
         mouseManager.simpleUpdate()
         if (mouseManager.isCursorMoving()) {
-            if (isRightClickPressed) {
-                if (isLeftControlPressed || isLeftAltPressed) {
+            if (isMovementClickPressed) {
+                if (isRotationMovementPressed || isCameraRotationMovementPressed) {
                     val delta = if (viewMode == TOP_VIEW) -mouseManager.deltaY else mouseManager.deltaX
-                    if (isLeftControlPressed) {
+                    if (isRotationMovementPressed) {
                         rotateOnWorldAxis(tpf * delta)
                     } else {
                         rotateOnCameraAxis(tpf * delta)
                     }
                 } else {
-                    rightClickMovement(tpf)
+                    moveCamera(tpf)
                 }
             }
         }
     }
 
+    /**
+     * Rotate [CameraNode] and move it along a circle, giving the impression
+     * that the world is rotating from the camera perspective.
+     */
     private fun rotateOnWorldAxis(angle: Float) {
         rotateCameraOnAxisZ(angle)
 
         if (viewMode != TOP_VIEW) {
             val radius = calculateRotationRadius()
-            val x = radius * sin(angle)
-            val y = radius * (1 - cos(angle))
-            val delta = Vector3f(x, y, 0f)
+            val x = sin(angle)
+            val y = 1 - cos(angle)
+            val delta = Vector3f(x, y, 0f) * radius
             cameraNode.move(rotateForCurrentAngle(delta))
         }
 
@@ -202,7 +206,7 @@ class CameraManager(private val rootNode: Node,
         return cameraNode
     }
 
-    private fun rightClickMovement(tpf: Float) {
+    private fun moveCamera(tpf: Float) {
         var cameraMovement = Vector3f(mouseManager.deltaX, mouseManager.deltaY, 0f)
 
         if (viewMode == ISO_VIEW) {
@@ -215,11 +219,8 @@ class CameraManager(private val rootNode: Node,
         cameraNode.move(rotateForCurrentAngle(cameraMovement * movementSpeed))
     }
 
-
-    /**
-     * Found on https://en.wikipedia.org/wiki/Rotation_of_axes
-     */
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
+        // found on https://en.wikipedia.org/wiki/Rotation_of_axes
         val x = input.x * cos(cameraAngleZ) + input.y * sin(cameraAngleZ)
         val y = -(input.x * sin(cameraAngleZ)) + input.y * cos(cameraAngleZ)
         return Vector3f(x, y, input.z)

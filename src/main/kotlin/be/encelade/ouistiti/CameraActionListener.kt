@@ -7,9 +7,9 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
 
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
         when (name) {
-            MOUSE_RIGHT_CLICK -> cameraManager.isRightClickPressed = isPressed
-            LEFT_CONTROL -> cameraManager.isLeftControlPressed = isPressed
-            LEFT_ALT -> cameraManager.isLeftAltPressed = isPressed
+            MOUSE_RIGHT_CLICK -> cameraManager.isMovementClickPressed = isPressed
+            ROTATE_WORLD -> cameraManager.isRotationMovementPressed = isPressed
+            ROTATE_CAMERA -> cameraManager.isCameraRotationMovementPressed = isPressed
         }
 
         if (isPressed) {
@@ -26,8 +26,8 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
     companion object {
 
         const val MOUSE_RIGHT_CLICK = "MOUSE_RIGHT_CLICK"
-        const val LEFT_CONTROL = "LEFT_CONTROL"
-        const val LEFT_ALT = "LEFT_ALT"
+        const val ROTATE_WORLD = "ROTATE_WORLD"
+        const val ROTATE_CAMERA = "ROTATE_CAMERA"
 
         const val ROTATE = "ROTATE"
 
