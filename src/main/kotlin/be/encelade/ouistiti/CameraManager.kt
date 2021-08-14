@@ -3,6 +3,7 @@ package be.encelade.ouistiti
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
 import be.encelade.ouistiti.CameraActionListener.Companion.ISO_VIEW_KEY
+import be.encelade.ouistiti.CameraActionListener.Companion.LEFT_ALT
 import be.encelade.ouistiti.CameraActionListener.Companion.LEFT_CONTROL
 import be.encelade.ouistiti.CameraActionListener.Companion.MOUSE_RIGHT_CLICK
 import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE
@@ -56,7 +57,7 @@ class CameraManager(private val rootNode: Node,
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, LEFT_CONTROL, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
+        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, LEFT_CONTROL, LEFT_ALT, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
     }
 
@@ -74,6 +75,7 @@ class CameraManager(private val rootNode: Node,
 
     fun addControlRotateInputMappings() {
         inputManager.addMapping(LEFT_CONTROL, KeyTrigger(KEY_LCONTROL))
+        inputManager.addMapping(LEFT_ALT, KeyTrigger(KEY_LSHIFT))
     }
 
     fun addDefaultRotateInputMappings() {
@@ -96,9 +98,13 @@ class CameraManager(private val rootNode: Node,
         mouseManager.simpleUpdate()
         if (mouseManager.isCursorMoving()) {
             if (isRightClickPressed) {
-                if (isLeftControlPressed) {
+                if (isLeftControlPressed || isLeftAltPressed) {
                     val delta = if (viewMode == TOP_VIEW) -mouseManager.deltaY else mouseManager.deltaX
-                    rotateOnWorldAxis(tpf * delta)
+                    if (isLeftControlPressed) {
+                        rotateOnWorldAxis(tpf * delta)
+                    } else {
+                        rotateOnCameraAxis(tpf * delta)
+                    }
                 } else {
                     rightClickMovement(tpf)
                 }
@@ -107,25 +113,39 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun rotateOnWorldAxis(angle: Float) {
-        val baseRotation = baseRotation[viewMode]!! + Vector3f(0f, 0f, -cameraAngleZ)
-        val revertBaseRotation = baseRotation * -1f
-
-        cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
-        cameraNode.rotate(0f, 0f, angle)
-        cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
+        rotateCameraOnAxisZ(angle)
 
         if (viewMode != TOP_VIEW) {
             val radius = calculateRotationRadius()
             val x = radius * sin(angle)
             val y = radius * (1 - cos(angle))
             val delta = Vector3f(x, y, 0f)
-            println("$x, $y / ${RAD_TO_DEG * angle}")
             cameraNode.move(rotateForCurrentAngle(delta))
         }
 
         this.cameraAngleZ -= angle
     }
 
+    private fun rotateOnCameraAxis(angle: Float) {
+        rotateCameraOnAxisZ(angle)
+        this.cameraAngleZ -= angle
+    }
+
+    private fun rotateCameraOnAxisZ(angle: Float) {
+        println("rotate by ${angle}")
+
+        val baseRotation = baseRotation[viewMode]!! + Vector3f(0f, 0f, -cameraAngleZ)
+        val revertBaseRotation = baseRotation * -1f
+
+        cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
+        cameraNode.rotate(0f, 0f, angle)
+        cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
+    }
+
+    /**
+     * Distance between the camera (x,y) position and point that intersects the ground from camera
+     * This radius is proportional to Z (rotation radius is larger if we're far from the ground)
+     */
     private fun calculateRotationRadius(): Float {
         return cameraNode.localTranslation.z * cos(QUARTER_PI)
     }
