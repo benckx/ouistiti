@@ -2,14 +2,6 @@ package be.encelade.ouistiti
 
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
-import be.encelade.ouistiti.CameraActionListener.Companion.ISO_VIEW_KEY
-import be.encelade.ouistiti.CameraActionListener.Companion.MOUSE_RIGHT_CLICK
-import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE
-import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_CAMERA
-import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_WORLD
-import be.encelade.ouistiti.CameraActionListener.Companion.SIDE_VIEW_KEY
-import be.encelade.ouistiti.CameraActionListener.Companion.SWITCH_VIEW
-import be.encelade.ouistiti.CameraActionListener.Companion.TOP_VIEW_KEY
 import be.encelade.ouistiti.CameraAnalogListener.Companion.WHEEL_DOWN
 import be.encelade.ouistiti.CameraAnalogListener.Companion.WHEEL_UP
 import be.encelade.ouistiti.ViewMode.*
@@ -44,6 +36,9 @@ class CameraManager(private val rootNode: Node,
     internal var isRotationMovementPressed = false
     internal var isCameraRotationMovementPressed = false
 
+    internal var isRotationClockwisePressed = false
+    internal var isRotationCounterClockwisePressed = false
+
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
 
@@ -57,7 +52,10 @@ class CameraManager(private val rootNode: Node,
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOUSE_RIGHT_CLICK, ROTATE_WORLD, ROTATE_CAMERA, ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
+        inputManager.addListener(actionListener, MOVEMENT_KEY_PRESSED_ACTION, ROTATE_WORLD_KEY_PRESSED_ACTION,
+                ROTATE_CAMERA_KEY_PRESSED_ACTION, ROTATE_CLOCKWISE_KEY_PRESSED_ACTION, ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION,
+                ROTATE, SWITCH_VIEW, TOP_VIEW_KEY, SIDE_VIEW_KEY, ISO_VIEW_KEY)
+
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
     }
 
@@ -70,14 +68,17 @@ class CameraManager(private val rootNode: Node,
     }
 
     fun addDefaultRightClickInputMappings() {
-        inputManager.addMapping(MOUSE_RIGHT_CLICK, MouseButtonTrigger(BUTTON_RIGHT))
+        inputManager.addMapping(MOVEMENT_KEY_PRESSED_ACTION, MouseButtonTrigger(BUTTON_RIGHT))
     }
 
     fun addControlRotateInputMappings() {
-        inputManager.addMapping(ROTATE_WORLD, KeyTrigger(KEY_LCONTROL))
-        inputManager.addMapping(ROTATE_CAMERA, KeyTrigger(KEY_LSHIFT))
+        inputManager.addMapping(ROTATE_WORLD_KEY_PRESSED_ACTION, KeyTrigger(KEY_LCONTROL))
+        inputManager.addMapping(ROTATE_CAMERA_KEY_PRESSED_ACTION, KeyTrigger(KEY_LSHIFT))
+        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION, KeyTrigger(KEY_B))
+        inputManager.addMapping(ROTATE_CLOCKWISE_KEY_PRESSED_ACTION, KeyTrigger(KEY_N))
     }
 
+    // TODO: remove
     fun addDefaultRotateInputMappings() {
         inputManager.addMapping(ROTATE, KeyTrigger(KEY_R), KeyTrigger(KEY_O))
     }
@@ -109,6 +110,10 @@ class CameraManager(private val rootNode: Node,
                     moveCamera(tpf)
                 }
             }
+        } else if (isRotationClockwisePressed && !isRotationCounterClockwisePressed) {
+            rotateOnWorldAxis(cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
+        } else if (!isRotationClockwisePressed && isRotationCounterClockwisePressed) {
+            rotateOnWorldAxis(-cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
         }
     }
 
@@ -136,7 +141,7 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun rotateCameraOnAxisZ(angle: Float) {
-        val baseRotation = baseRotation[viewMode]!! + Vector3f(0f, 0f, -cameraAngleZ)
+        val baseRotation = baseRotation[viewMode]!!// + Vector3f(0f, 0f, -cameraAngleZ)
         val revertBaseRotation = baseRotation * -1f
 
         cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
@@ -226,9 +231,22 @@ class CameraManager(private val rootNode: Node,
         return Vector3f(x, y, input.z)
     }
 
-    private companion object {
+    companion object {
 
         const val CAMERA_NODE = "CAMERA_NODE"
+
+        const val MOVEMENT_KEY_PRESSED_ACTION = "MOUSE_RIGHT_CLICK"
+        const val ROTATE_WORLD_KEY_PRESSED_ACTION = "ROTATE_WORLD"
+        const val ROTATE_CAMERA_KEY_PRESSED_ACTION = "ROTATE_CAMERA"
+
+        const val ROTATE = "ROTATE"
+        const val ROTATE_CLOCKWISE_KEY_PRESSED_ACTION = "ROTATE_CLOCKWISE"
+        const val ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION = "ROTATE_COUNTER_CLOCKWISE"
+
+        const val SWITCH_VIEW = "SWITCH_VIEW"
+        const val TOP_VIEW_KEY = "TOP_VIEW"
+        const val SIDE_VIEW_KEY = "SIDE_VIEW"
+        const val ISO_VIEW_KEY = "ISO_VIEW"
 
         // TODO: also make those configurable
         const val MIN_Z = 2

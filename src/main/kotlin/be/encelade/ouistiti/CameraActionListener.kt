@@ -1,5 +1,15 @@
 package be.encelade.ouistiti
 
+import be.encelade.ouistiti.CameraManager.Companion.ISO_VIEW_KEY
+import be.encelade.ouistiti.CameraManager.Companion.MOVEMENT_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CAMERA_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CLOCKWISE_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_WORLD_KEY_PRESSED_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.SIDE_VIEW_KEY
+import be.encelade.ouistiti.CameraManager.Companion.SWITCH_VIEW
+import be.encelade.ouistiti.CameraManager.Companion.TOP_VIEW_KEY
 import be.encelade.ouistiti.ViewMode.*
 import com.jme3.input.controls.ActionListener
 
@@ -7,9 +17,11 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
 
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
         when (name) {
-            MOUSE_RIGHT_CLICK -> cameraManager.isMovementClickPressed = isPressed
-            ROTATE_WORLD -> cameraManager.isRotationMovementPressed = isPressed
-            ROTATE_CAMERA -> cameraManager.isCameraRotationMovementPressed = isPressed
+            MOVEMENT_KEY_PRESSED_ACTION -> cameraManager.isMovementClickPressed = isPressed
+            ROTATE_WORLD_KEY_PRESSED_ACTION -> cameraManager.isRotationMovementPressed = isPressed
+            ROTATE_CAMERA_KEY_PRESSED_ACTION -> cameraManager.isCameraRotationMovementPressed = isPressed
+            ROTATE_CLOCKWISE_KEY_PRESSED_ACTION -> cameraManager.isRotationClockwisePressed = isPressed
+            ROTATE_COUNTER_CLOCKWISE_KEY_PRESSED_ACTION -> cameraManager.isRotationCounterClockwisePressed = isPressed
         }
 
         if (isPressed) {
@@ -21,21 +33,6 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
                 ROTATE -> cameraManager.rotate()
             }
         }
-    }
-
-    companion object {
-
-        const val MOUSE_RIGHT_CLICK = "MOUSE_RIGHT_CLICK"
-        const val ROTATE_WORLD = "ROTATE_WORLD"
-        const val ROTATE_CAMERA = "ROTATE_CAMERA"
-
-        const val ROTATE = "ROTATE"
-
-        const val SWITCH_VIEW = "SWITCH_VIEW"
-        const val TOP_VIEW_KEY = "TOP_VIEW"
-        const val SIDE_VIEW_KEY = "SIDE_VIEW"
-        const val ISO_VIEW_KEY = "ISO_VIEW"
-
     }
 
 }

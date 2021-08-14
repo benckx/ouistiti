@@ -18,6 +18,10 @@ class DefaultCameraSpeedCalculator : CameraSpeedCalculator {
         return ZOOM_BASE_SPEED * value * currentZ
     }
 
+    override fun cameraRotationSpeed(cameraNode: CameraNode): Float {
+        return 5f
+    }
+
     companion object {
 
         const val CAMERA_BASE_SPEED = 0.0005f

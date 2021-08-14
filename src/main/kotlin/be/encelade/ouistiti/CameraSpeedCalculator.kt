@@ -8,4 +8,6 @@ interface CameraSpeedCalculator {
 
     fun cameraZoomSpeed(tpf: Float, value: Float, cameraNode: CameraNode): Float
 
+    fun cameraRotationSpeed(cameraNode: CameraNode): Float
+
 }
