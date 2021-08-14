@@ -105,17 +105,12 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun rotateByAngle(angle: Float) {
-        val baseRotation = baseRotationWithCurrentAngle(viewMode)
-        val revertBaseRotation = baseRotation.mult(-1f)
+        val baseRotation = baseRotation(viewMode) + Vector3f(0f, 0f, -cameraAngleZ)
+        val revertBaseRotation = baseRotation * -1f
 
         cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
         cameraNode.rotate(0f, 0f, angle)
         cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
-
-//        val x = .5f * cos(angle)
-//        val y = .5f * sin(angle)
-//        val cameraMovement = Vector3f(x, y, 0f)
-//        cameraNode.move(cameraMovement)
 
         this.cameraAngleZ -= angle
     }
@@ -165,7 +160,7 @@ class CameraManager(private val rootNode: Node,
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        val rotation = baseRotationWithCurrentAngle(viewMode)
+        val rotation = baseRotation(viewMode)
         cameraNode.rotate(rotation.x, rotation.y, rotation.z)
 
         cameraNode.camera.location = Vector3f(0f, 0f, 0f)
@@ -197,14 +192,6 @@ class CameraManager(private val rootNode: Node,
         return rotateForCurrentAngle(location)
     }
 
-    private fun baseRotation(viewMode: ViewMode): Vector3f {
-        return topViewRotation + rotationFromTopView[viewMode]!!
-    }
-
-    private fun baseRotationWithCurrentAngle(viewMode: ViewMode): Vector3f {
-        return baseRotation(viewMode) + Vector3f(0f, 0f, -cameraAngleZ)
-    }
-
     /**
      * Found on https://en.wikipedia.org/wiki/Rotation_of_axes
      */
@@ -229,6 +216,10 @@ class CameraManager(private val rootNode: Node,
                 SIDE_VIEW to Vector3f(-QUARTER_PI, 0f, 0f),
                 ISO_VIEW to Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
         )
+
+        private fun baseRotation(viewMode: ViewMode): Vector3f {
+            return topViewRotation + rotationFromTopView[viewMode]!!
+        }
 
     }
 }
