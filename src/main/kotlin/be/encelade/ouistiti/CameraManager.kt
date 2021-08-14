@@ -132,8 +132,6 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun rotateCameraOnAxisZ(angle: Float) {
-        println("rotate by ${angle}")
-
         val baseRotation = baseRotation[viewMode]!! + Vector3f(0f, 0f, -cameraAngleZ)
         val revertBaseRotation = baseRotation * -1f
 
@@ -143,7 +141,7 @@ class CameraManager(private val rootNode: Node,
     }
 
     /**
-     * Distance between the camera (x,y) position and point that intersects the ground from camera
+     * Distance between the camera (x, y) position and point that intersects with ground, if we trace a ray from the camera.
      * This radius is proportional to Z (rotation radius is larger if we're far from the ground)
      */
     private fun calculateRotationRadius(): Float {

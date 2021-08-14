@@ -6,8 +6,6 @@ import com.jme3.input.controls.ActionListener
 class CameraActionListener(private val cameraManager: CameraManager) : ActionListener {
 
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
-        println("$name -> $isPressed")
-
         when (name) {
             MOUSE_RIGHT_CLICK -> cameraManager.isRightClickPressed = isPressed
             LEFT_CONTROL -> cameraManager.isLeftControlPressed = isPressed
