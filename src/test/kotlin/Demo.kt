@@ -7,6 +7,7 @@ import com.jme3.system.AppSettings
 fun main() {
     val settings = AppSettings(true)
     settings.isFullscreen = false
+    settings.isVSync = false
     settings.setResolution(1280, 720)
 
     val simpleApp = DemoSimpleApp()

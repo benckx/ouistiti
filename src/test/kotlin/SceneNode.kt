@@ -16,8 +16,8 @@ class SceneNode : Node("MY_SCENE") {
 
     private companion object {
 
-        const val sizeX = 10
-        const val sizeY = 8
+        const val sizeX = 20
+        const val sizeY = 16
 
         fun makeFloor(): Geometry {
             val floorMat = UnshadedMaterial()
@@ -42,4 +42,5 @@ class SceneNode : Node("MY_SCENE") {
         }
 
     }
+
 }
