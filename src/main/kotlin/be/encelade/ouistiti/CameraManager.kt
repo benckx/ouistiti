@@ -96,7 +96,8 @@ class CameraManager(private val rootNode: Node,
         if (mouseManager.isCursorMoving()) {
             if (isRightClickPressed) {
                 if (isLeftControlPressed) {
-                    rotateCamera(tpf * (mouseManager.deltaX))
+                    val delta = if (viewMode == TOP_VIEW) -mouseManager.deltaY else mouseManager.deltaX
+                    rotateCamera(tpf * delta)
                 } else {
                     rightClickMovement(tpf)
                 }
@@ -105,7 +106,7 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun rotateCamera(angle: Float) {
-        val baseRotation = baseRotation(viewMode) + Vector3f(0f, 0f, -cameraAngleZ)
+        val baseRotation = baseRotation[viewMode]!! + Vector3f(0f, 0f, -cameraAngleZ)
         val revertBaseRotation = baseRotation * -1f
 
         cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
@@ -160,11 +161,11 @@ class CameraManager(private val rootNode: Node,
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        val rotation = baseRotation(viewMode)
+        val rotation = baseRotation[viewMode]!!
         cameraNode.rotate(rotation.x, rotation.y, rotation.z)
 
         cameraNode.camera.location = Vector3f(0f, 0f, 0f)
-        cameraNode.move(baseLocationFor(viewMode))
+        cameraNode.move(baseLocation[viewMode]!!)
 
         return cameraNode
     }
@@ -182,15 +183,6 @@ class CameraManager(private val rootNode: Node,
         cameraNode.move(rotateForCurrentAngle(cameraMovement * movementSpeed))
     }
 
-    private fun baseLocationFor(viewMode: ViewMode): Vector3f {
-        val location = when (viewMode) {
-            TOP_VIEW -> Vector3f(0f, 0f, 20f)
-            SIDE_VIEW -> Vector3f(0f, -18f, 20f)
-            ISO_VIEW -> Vector3f(-13f, -13f, 18f)
-        }
-
-        return rotateForCurrentAngle(location)
-    }
 
     /**
      * Found on https://en.wikipedia.org/wiki/Rotation_of_axes
@@ -209,17 +201,19 @@ class CameraManager(private val rootNode: Node,
         const val MIN_Z = 2
         const val MAX_Z = 40
 
-        private val topViewRotation = Vector3f(PI, 0f, PI)
-
-        private val rotationFromTopView = mapOf(
-                TOP_VIEW to Vector3f(0f, 0f, 0f),
-                SIDE_VIEW to Vector3f(-QUARTER_PI, 0f, 0f),
-                ISO_VIEW to Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
+        private val baseLocation = mapOf(
+                TOP_VIEW to Vector3f(0f, 0f, 20f),
+                SIDE_VIEW to Vector3f(0f, -18f, 20f),
+                ISO_VIEW to Vector3f(-13f, -13f, 18f)
         )
 
-        private fun baseRotation(viewMode: ViewMode): Vector3f {
-            return topViewRotation + rotationFromTopView[viewMode]!!
-        }
+        private val topViewRotation = Vector3f(PI, 0f, PI)
+
+        private val baseRotation = mapOf(
+                TOP_VIEW to topViewRotation + Vector3f(0f, 0f, 0f),
+                SIDE_VIEW to topViewRotation + Vector3f(-QUARTER_PI, 0f, 0f),
+                ISO_VIEW to topViewRotation + Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
+        )
 
     }
 
