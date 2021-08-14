@@ -41,6 +41,7 @@ class CameraManager(private val rootNode: Node,
 
     internal var isRightClickPressed = false
     internal var isLeftControlPressed = false
+    internal var isLeftAltPressed = false
 
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
@@ -97,7 +98,7 @@ class CameraManager(private val rootNode: Node,
             if (isRightClickPressed) {
                 if (isLeftControlPressed) {
                     val delta = if (viewMode == TOP_VIEW) -mouseManager.deltaY else mouseManager.deltaX
-                    rotateCamera(tpf * delta * 2f)
+                    rotateCameraAxis(tpf * delta)
                 } else {
                     rightClickMovement(tpf)
                 }
@@ -105,7 +106,7 @@ class CameraManager(private val rootNode: Node,
         }
     }
 
-    private fun rotateCamera(angle: Float) {
+    private fun rotateCameraAxis(angle: Float) {
         val baseRotation = baseRotation[viewMode]!! + Vector3f(0f, 0f, -cameraAngleZ)
         val revertBaseRotation = baseRotation * -1f
 
@@ -113,7 +114,20 @@ class CameraManager(private val rootNode: Node,
         cameraNode.rotate(0f, 0f, angle)
         cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
 
+        if (viewMode != TOP_VIEW) {
+            val radius = calculateRotationRadius()
+            val x = radius * sin(angle)
+            val y = radius * (1 - cos(angle))
+            val delta = Vector3f(x, y, 0f)
+            println("$x, $y / ${RAD_TO_DEG * angle}")
+            cameraNode.move(rotateForCurrentAngle(delta))
+        }
+
         this.cameraAngleZ -= angle
+    }
+
+    private fun calculateRotationRadius(): Float {
+        return cameraNode.localTranslation.z * cos(QUARTER_PI)
     }
 
     fun rotate() {
