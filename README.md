@@ -6,7 +6,7 @@
 
 A basic camera system for a management game for jMonkeyEngine.
 
-*Ouistiti* is French for marmoset. 
+*Ouistiti* is French for marmoset.
 
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
@@ -18,7 +18,7 @@ A basic camera system for a management game for jMonkeyEngine.
 * Move camera by holding right click
 * Zoom in and out with the mouse wheel
 * Switch view with **V** (or use **T** for Top View, **S** for Side View, **I** for Isometric View)
-* Rotate view with **R** 
+* Rotate view with **R**
 
 # Usage
 
@@ -49,24 +49,24 @@ class DemoSimpleApp : SimpleApplication() {
 
 ```Java
     import be.encelade.ouistiti.CameraManager;
-    import com.jme3.app.SimpleApplication;
-    
-    // ...
+import com.jme3.app.SimpleApplication;
 
-    public static class MyJavaApp extends SimpleApplication {
+// ...
 
-        CameraManager cameraManager;
+public static class MyJavaApp extends SimpleApplication {
 
-        @Override
-        public void simpleInitApp() {
-            cameraManager = new CameraManager(this, ISO_VIEW);
-            cameraManager.addDefaultKeyMappings();
-        }
+    CameraManager cameraManager;
 
-        @Override
-        public void simpleUpdate(float tpf) {
-            cameraManager.simpleUpdate(tpf);
-        }
+    @Override
+    public void simpleInitApp() {
+        cameraManager = new CameraManager(this, ISO_VIEW);
+        cameraManager.addDefaultKeyMappings();
+    }
+
+    @Override
+    public void simpleUpdate(float tpf) {
+        cameraManager.simpleUpdate(tpf);
+    }
 }
 ```
 
@@ -90,9 +90,11 @@ interface CameraSpeedCalculator {
 # Examples
 
 ## In Kotlin
+
 https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
 
 ## In Java
+
 Sample project with Gradle configuration (Java 8):<br/>
 https://github.com/benckx/ouistiti-java-sample
 
@@ -107,13 +109,22 @@ https://github.com/benckx/ouistiti-java-sample
     }
 
 # Change log
+
+## Version 1.3
+
+* Free rotation
+
 ## Version 1.2
+
 * Use `chimp-utils` project
 * Update Kotlin from 1.4.10 to 1.4.20
 * Add more customizations settings (split `CameraSpeedCalculator`, split the different default key mappings, etc.)
 
 # Related Project
+
 Collection Kotlin of APIs and Helper:
+
 * https://github.com/benckx/chimp-utils
 
-If I manage to extract re-usable management game features from my game, I would move them to the ouistiti project, while more generic / engine-related components would be added here in the chimp-utils project.
+If I manage to extract re-usable management game features from my game, I would move them to the ouistiti project, while
+more generic / engine-related components would be added here in the chimp-utils project.

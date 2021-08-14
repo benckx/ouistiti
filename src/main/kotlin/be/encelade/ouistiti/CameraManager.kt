@@ -97,7 +97,7 @@ class CameraManager(private val rootNode: Node,
             if (isRightClickPressed) {
                 if (isLeftControlPressed) {
                     val delta = if (viewMode == TOP_VIEW) -mouseManager.deltaY else mouseManager.deltaX
-                    rotateCamera(tpf * delta)
+                    rotateCamera(tpf * delta * 2f)
                 } else {
                     rightClickMovement(tpf)
                 }
