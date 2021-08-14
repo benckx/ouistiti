@@ -96,7 +96,7 @@ class CameraManager(private val rootNode: Node,
         if (mouseManager.isCursorMoving()) {
             if (isRightClickPressed) {
                 if (isLeftControlPressed) {
-                    rotateByAngle(tpf * (mouseManager.deltaX + mouseManager.deltaY))
+                    rotateCamera(tpf * (mouseManager.deltaX))
                 } else {
                     rightClickMovement(tpf)
                 }
@@ -104,7 +104,7 @@ class CameraManager(private val rootNode: Node,
         }
     }
 
-    private fun rotateByAngle(angle: Float) {
+    private fun rotateCamera(angle: Float) {
         val baseRotation = baseRotation(viewMode) + Vector3f(0f, 0f, -cameraAngleZ)
         val revertBaseRotation = baseRotation * -1f
 
@@ -222,4 +222,5 @@ class CameraManager(private val rootNode: Node,
         }
 
     }
+
 }
