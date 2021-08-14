@@ -95,9 +95,13 @@ class CameraManager(private val rootNode: Node,
         mouseManager.simpleUpdate()
         if (mouseManager.isCursorMoving()) {
             if (isRightClickPressed) {
-                rightClickMovement(tpf)
-            } else if (isLeftControlPressed) {
-                angle += mouseManager.deltaX
+                if (isLeftControlPressed) {
+                    val angleDelta = mouseManager.deltaX / 100
+                    angle += angleDelta
+//                    cameraNode.rotate(0f, 0f, angleDelta)
+                } else {
+                    rightClickMovement(tpf)
+                }
             }
         }
     }

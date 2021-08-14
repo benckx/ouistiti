@@ -9,7 +9,6 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
         when (name) {
             MOUSE_RIGHT_CLICK -> cameraManager.isRightClickPressed = isPressed
             LEFT_CONTROL -> cameraManager.isLeftControlPressed = isPressed
-
         }
 
         if (isPressed) {
