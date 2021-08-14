@@ -1,7 +1,7 @@
 import be.encelade.chimp.material.MaterialDefinitions
 import be.encelade.chimp.utils.ColorHelperUtils.ColorRGBA
 import be.encelade.ouistiti.CameraManager
-import be.encelade.ouistiti.ViewMode.ISO_VIEW
+import be.encelade.ouistiti.ViewMode.SIDE_VIEW
 import com.jme3.app.SimpleApplication
 import com.jme3.system.AppSettings
 
@@ -26,7 +26,7 @@ class DemoSimpleApp : SimpleApplication() {
         MaterialDefinitions.load(assetManager)
 
         // init CameraManager
-        cameraManager = CameraManager(this, viewMode = ISO_VIEW)
+        cameraManager = CameraManager(this, viewMode = SIDE_VIEW)
         cameraManager.addDefaultKeyMappings()
 
         // build scene

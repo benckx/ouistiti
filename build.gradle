@@ -21,6 +21,7 @@ dependencies {
     api "org.jmonkeyengine:jme3-desktop:$jmeVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
     implementation "com.github.benckx.chimp-utils:chimp-utils-basics:$chimpUtilsVersion"
     implementation "com.github.benckx.chimp-utils:chimp-utils-jme3:$chimpUtilsVersion"

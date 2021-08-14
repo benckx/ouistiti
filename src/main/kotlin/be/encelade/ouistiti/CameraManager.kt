@@ -51,14 +51,6 @@ class CameraManager(private val rootNode: Node,
     private var angle: Float = 0f
     private var clockWise = true
 
-    private val topViewRotation = Vector3f(PI, 0f, PI)
-
-    private val rotationFromTopView = mapOf(
-            TOP_VIEW to Vector3f(0f, 0f, 0f),
-            SIDE_VIEW to Vector3f(-QUARTER_PI, 0f, 0f),
-            ISO_VIEW to Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
-    )
-
     init {
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
@@ -222,6 +214,14 @@ class CameraManager(private val rootNode: Node,
         // TODO: also make those configurable
         const val MIN_Z = 2
         const val MAX_Z = 40
+
+        private val topViewRotation = Vector3f(PI, 0f, PI)
+
+        private val rotationFromTopView = mapOf(
+                TOP_VIEW to Vector3f(0f, 0f, 0f),
+                SIDE_VIEW to Vector3f(-QUARTER_PI, 0f, 0f),
+                ISO_VIEW to Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
+        )
 
     }
 }
