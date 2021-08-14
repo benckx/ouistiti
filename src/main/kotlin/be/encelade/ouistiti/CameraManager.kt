@@ -125,16 +125,19 @@ class CameraManager(private val rootNode: Node,
             cameraNode.move(rotateForCurrentAngle(delta))
         }
 
-        this.cameraAngleZ -= angle
+        cameraAngleZ -= angle
     }
 
     private fun rotateOnCameraAxis(angle: Float) {
         rotateCameraOnAxisZ(angle)
-        this.cameraAngleZ -= angle
+        cameraAngleZ -= angle
     }
 
+    /**
+     * Rotate [CameraNode] on its Z axis, without changing the value of "cameraAngleZ"
+     */
     private fun rotateCameraOnAxisZ(angle: Float) {
-        val baseRotation = baseRotation[viewMode]!!// + Vector3f(0f, 0f, -cameraAngleZ)
+        val baseRotation = baseRotation[viewMode]!!
         val revertBaseRotation = baseRotation * -1f
 
         cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
