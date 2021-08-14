@@ -48,7 +48,7 @@ class CameraManager(private val rootNode: Node,
     private var mouseManager = MouseManager(inputManager)
     private var cameraNode: CameraNode = resetCameraNode(viewMode)
 
-    private var angle: Float = 0f
+    private var cameraAngleZ: Float = 0f
     private var clockWise = true
 
     init {
@@ -112,12 +112,17 @@ class CameraManager(private val rootNode: Node,
         cameraNode.rotate(0f, 0f, angle)
         cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
 
-        this.angle -= angle
+//        val x = .5f * cos(angle)
+//        val y = .5f * sin(angle)
+//        val cameraMovement = Vector3f(x, y, 0f)
+//        cameraNode.move(cameraMovement)
+
+        this.cameraAngleZ -= angle
     }
 
     fun rotate() {
         repeat(if (clockWise) 3 else 1) {
-            angle += HALF_PI
+            cameraAngleZ += HALF_PI
         }
 
         if (viewMode == TOP_VIEW) {
@@ -154,6 +159,8 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun resetCameraNode(viewMode: ViewMode): CameraNode {
+        cameraAngleZ = 0f
+
         rootNode.detachChildNamed(CAMERA_NODE)
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
@@ -195,15 +202,15 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun baseRotationWithCurrentAngle(viewMode: ViewMode): Vector3f {
-        return baseRotation(viewMode) + Vector3f(0f, 0f, -angle)
+        return baseRotation(viewMode) + Vector3f(0f, 0f, -cameraAngleZ)
     }
 
     /**
      * Found on https://en.wikipedia.org/wiki/Rotation_of_axes
      */
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
-        val x = input.x * cos(angle) + input.y * sin(angle)
-        val y = -(input.x * sin(angle)) + input.y * cos(angle)
+        val x = input.x * cos(cameraAngleZ) + input.y * sin(cameraAngleZ)
+        val y = -(input.x * sin(cameraAngleZ)) + input.y * cos(cameraAngleZ)
         return Vector3f(x, y, input.z)
     }
 
