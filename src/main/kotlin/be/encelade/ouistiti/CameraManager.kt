@@ -243,18 +243,15 @@ class CameraManager(private val rootNode: Node,
         cameraNode.localTranslation = initLocation
     }
 
+    private fun rotateForCurrentAngle(input: Vector2f): Vector3f {
+        return rotateForCurrentAngle(Vector3f(input.x, input.y, 0f))
+    }
+
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
         // found on https://en.wikipedia.org/wiki/Rotation_of_axes
         val x = input.x * cos(cameraAngleZ) + input.y * sin(cameraAngleZ)
         val y = -(input.x * sin(cameraAngleZ)) + input.y * cos(cameraAngleZ)
         return Vector3f(x, y, input.z)
-    }
-
-    private fun rotateForCurrentAngle(input: Vector2f): Vector3f {
-        // found on https://en.wikipedia.org/wiki/Rotation_of_axes
-        val x = input.x * cos(cameraAngleZ) + input.y * sin(cameraAngleZ)
-        val y = -(input.x * sin(cameraAngleZ)) + input.y * cos(cameraAngleZ)
-        return Vector3f(x, y, 0f)
     }
 
     companion object {
