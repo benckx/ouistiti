@@ -29,6 +29,8 @@ class DemoSimpleApp : SimpleApplication() {
         // init CameraManager
         cameraManager = CameraManager(this)
         cameraManager.addDefaultKeyMappings()
+//        cameraManager.addQwertyWASDInputMappings()
+        cameraManager.addAzertyWASDInputMappings()
 
         // build scene
         viewPort.backgroundColor = ColorRGBA("#1c3064")

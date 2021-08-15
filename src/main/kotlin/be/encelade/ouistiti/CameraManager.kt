@@ -44,6 +44,8 @@ class CameraManager(private val rootNode: Node,
     internal var isRotationClockwisePressed = false
     internal var isRotationCounterClockwisePressed = false
 
+    internal val directionKeyPressed = mutableMapOf<Direction, Boolean>()
+
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
 
@@ -56,11 +58,14 @@ class CameraManager(private val rootNode: Node,
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOVEMENT_KEY_PRESSED, ROTATE_WORLD_AXIS_KEY_PRESSED, ROTATE_CAMERA_AXIS_KEY_PRESSED,
+        inputManager.addListener(actionListener, MOVE_LEFT_KEY, MOVE_RIGHT_KEY, MOVE_DOWN_KEY, MOVE_UP_KEY,
+                MOVEMENT_KEY_PRESSED, ROTATE_WORLD_AXIS_KEY_PRESSED, ROTATE_CAMERA_AXIS_KEY_PRESSED,
                 ROTATE_COUNTER_CLOCKWISE_KEY, ROTATE_CLOCKWISE_KEY,
                 SWITCH_VIEW_KEY, TOP_VIEW_KEY, ISOMETRIC_VIEW_KEY)
 
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
+
+        Direction.values().forEach { direction -> directionKeyPressed[direction] = false }
     }
 
     fun addDefaultKeyMappings() {
@@ -72,6 +77,20 @@ class CameraManager(private val rootNode: Node,
 
     fun addDefaultRightClickInputMappings() {
         inputManager.addMapping(MOVEMENT_KEY_PRESSED, MouseButtonTrigger(BUTTON_RIGHT))
+    }
+
+    fun addQwertyWASDInputMappings() {
+        inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_A))
+        inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
+        inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
+        inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
+    }
+
+    fun addAzertyWASDInputMappings() {
+        inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_Q))
+        inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
+        inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
+        inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
     }
 
     fun addDefaultRotationInputMappings() {
@@ -114,6 +133,12 @@ class CameraManager(private val rootNode: Node,
             rotateOnWorldAxis(cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
         } else if (!isRotationClockwisePressed && isRotationCounterClockwisePressed) {
             rotateOnWorldAxis(-cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
+        } else {
+            directionKeyPressed.filter { it.value }.keys.forEach { direction ->
+                val movement = rotateForCurrentAngle(direction.delta * tpf)
+                val speed = cameraSpeedCalculator.cameraKeySpeed(cameraNode)
+                cameraNode.move(movement * speed)
+            }
         }
     }
 

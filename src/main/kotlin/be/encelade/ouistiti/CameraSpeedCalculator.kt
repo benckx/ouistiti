@@ -6,6 +6,8 @@ interface CameraSpeedCalculator {
 
     fun cameraMovementSpeed(cameraNode: CameraNode): Float
 
+    fun cameraKeySpeed(cameraNode: CameraNode): Float
+
     fun cameraZoomSpeed(value: Float, cameraNode: CameraNode): Float
 
     fun cameraRotationSpeed(cameraNode: CameraNode): Float
