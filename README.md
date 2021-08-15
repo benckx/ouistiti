@@ -4,9 +4,9 @@
 
 # About
 
-A basic camera system for a 3D management/strategy game for <a href="https://jmonkeyengine.org">jMonkeyEngine</a>
-and <a href="https://www.lwjgl.org/">LWJGL</a>, that I developed while working on my game side
-project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
+A basic camera system for 3D management/strategy games for <a href="https://jmonkeyengine.org">jMonkeyEngine</a>
+/ <a href="https://www.lwjgl.org/">LWJGL</a>, that I developed while working on my game side
+project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*.
 
 *Ouistiti* is French for marmoset.
 
@@ -23,7 +23,7 @@ project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
 * Zoom in and out with the mouse wheel
 * Two view modes: Top view and "Isometric" view
 * Switch view with **V** (or use **T** for Top View, **I** for Isometric View)
-* Rotate with **B** (counter-clockwise) and **N** (clockwise) on "world axis" (from player's perspective, the world
+* Rotate with **B** (counter-clockwise) and **N** (clockwise) on "world axis" (i.e. from player's perspective, the world
   rotates)
 * Rotate on "world axis" by holding right click + keep left Control pressed
 * Rotate on camera axis (from player's perspective, camera rotates on its axis like a security camera) by holding right
@@ -31,7 +31,7 @@ project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
 
 Default key mappings can be overridden.
 
-The library is designed with the floor sitting in the XY plane, assuming it makes more sense to program your characters,
+The library is designed with the floor sitting in the XY plane, assuming it makes sense to program your game characters,
 units, buildings, etc. on a XY tiled grid.
 
 # Usage
@@ -98,6 +98,17 @@ public static class DemoSimpleApp extends SimpleApplication {
 }
 ```
 
+# Examples
+
+## In Kotlin
+
+https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
+
+## In Java
+
+Sample project with Gradle configuration (Java 8):<br/>
+https://github.com/benckx/ouistiti-java-sample
+
 # Configuration
 
 ## Camera Speed
@@ -120,17 +131,6 @@ interface CameraSpeedCalculator {
 
 }
 ```
-
-# Examples
-
-## In Kotlin
-
-https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
-
-## In Java
-
-Sample project with Gradle configuration (Java 8):<br/>
-https://github.com/benckx/ouistiti-java-sample
 
 # Change log
 
