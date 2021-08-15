@@ -26,8 +26,8 @@ Default key mappings can be overridden.
 * Rotate with **B** (counter-clockwise) and **N** (clockwise)
 * Rotate on "world axis" (from player's perspective, the world rotates) by holding right click + keep left Control
   pressed
-* Rotate on "camera axis" (from player's perspective, camera rotates like a security camera) by holding right click +
-  keep left Shift pressed
+* Rotate on camera axis (from player's perspective, camera rotates like a security camera) by holding right click + keep
+  left Shift pressed
 
 It's assumed the floor is in the XY plane.
 
@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.benckx:ouistiti:2.0"
+    compile "com.github.benckx:ouistiti:1.2"
 }
 ```
 
