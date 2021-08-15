@@ -27,9 +27,9 @@ open class DefaultCameraSpeedCalculator : CameraSpeedCalculator {
     companion object {
 
         const val CAMERA_BASE_SPEED = 0.0005f
-        const val CAMERA_KEY_SPEED = 2f
-        const val ZOOM_BASE_SPEED = 2f
-        const val ROTATION_BASE_SPEED = 4f
+        const val CAMERA_KEY_SPEED = 1.5f
+        const val ZOOM_BASE_SPEED = 1.5f
+        const val ROTATION_BASE_SPEED = 3f
 
     }
 

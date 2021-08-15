@@ -4,9 +4,9 @@
 
 # About
 
-A basic camera system for a 3D management game for <a href="https://jmonkeyengine.org">jMonkeyEngine</a>
-and <a href="https://www.lwjgl.org/">LWJGL</a>, that I developed while working on my
-game *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
+A basic camera system for a 3D management/strategy game for <a href="https://jmonkeyengine.org">jMonkeyEngine</a>
+and <a href="https://www.lwjgl.org/">LWJGL</a>, that I developed while working on my game side
+project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
 
 *Ouistiti* is French for marmoset.
 
@@ -18,18 +18,21 @@ game *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
 
 # Features
 
+* Move camera by holding right click
+* Move camera with WASD keys and/or arrow keys
+* Zoom in and out with the mouse wheel
+* Two view modes: Top view and "Isometric" view
+* Switch view with **V** (or use **T** for Top View, **I** for Isometric View)
+* Rotate with **B** (counter-clockwise) and **N** (clockwise) on "world axis" (from player's perspective, the world
+  rotates)
+* Rotate on "world axis" by holding right click + keep left Control pressed
+* Rotate on camera axis (from player's perspective, camera rotates on its axis like a security camera) by holding right
+  click + keep left Shift pressed
+
 Default key mappings can be overridden.
 
-* Move camera by holding right click
-* Zoom in and out with the mouse wheel
-* Switch view with **V** (or use **T** for Top View, **I** for Isometric View)
-* Rotate with **B** (counter-clockwise) and **N** (clockwise)
-* Rotate on "world axis" (from player's perspective, the world rotates) by holding right click + keep left Control
-  pressed
-* Rotate on camera axis (from player's perspective, camera rotates like a security camera) by holding right click + keep
-  left Shift pressed
-
-It's assumed the floor is in the XY plane.
+The library is designed with the floor sitting in the XY plane, assuming it makes more sense to program your characters,
+units, buildings, etc. on a XY tiled grid.
 
 # Usage
 
@@ -102,14 +105,20 @@ public static class DemoSimpleApp extends SimpleApplication {
 Implement the following interface and pass it as parameter of `CameraManager` to customize the movement speed.
 
 ```kotlin
+
+import com.jme3.scene.CameraNode
+
 interface CameraSpeedCalculator {
 
-    fun cameraMovementSpeed(tpf: Float, cameraNode: CameraNode): Float
+    fun cursorMovementSpeed(cameraNode: CameraNode): Float
 
-    fun cameraZoomSpeed(tpf: Float, value: Float, cameraNode: CameraNode): Float
+    fun keysMovementSpeed(cameraNode: CameraNode): Float
+
+    fun zoomSpeed(value: Float, cameraNode: CameraNode): Float
+
+    fun cameraRotationSpeed(cameraNode: CameraNode): Float
 
 }
-
 ```
 
 # Examples
