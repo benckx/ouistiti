@@ -6,6 +6,7 @@ import com.jme3.math.Vector2f
 class MouseManager(private val inputManager: InputManager) {
 
     private var previousCursorPosition: Vector2f? = null
+    private var cursorMovement: Vector2f? = null
 
     var deltaX = 0f
     var deltaY = 0f
@@ -14,16 +15,18 @@ class MouseManager(private val inputManager: InputManager) {
         updateCursorSpeed(inputManager.cursorPosition)
     }
 
-    fun isCursorMoving() = deltaX != 0f || deltaY != 0f
+    fun isCursorMoving(): Boolean {
+        return deltaX != 0f || deltaY != 0f
+    }
 
     private fun updateCursorSpeed(currentPosition: Vector2f) {
-        if (previousCursorPosition == null) {
-            previousCursorPosition = currentPosition
-        } else {
-            deltaX = currentPosition.x - previousCursorPosition!!.x
-            deltaY = currentPosition.y - previousCursorPosition!!.y
-            previousCursorPosition = Vector2f(currentPosition)
+        previousCursorPosition?.let { previous ->
+            deltaX = currentPosition.x - previous.x
+            deltaY = currentPosition.y - previous.y
+            cursorMovement = Vector2f(deltaX, deltaY)
         }
+
+        previousCursorPosition = Vector2f(currentPosition)
     }
 
 }

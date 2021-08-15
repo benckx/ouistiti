@@ -227,6 +227,11 @@ class CameraManager(private val rootNode: Node,
         const val ROTATE_WORLD_AXIS_KEY_PRESSED = "ROTATE_WORLD"
         const val ROTATE_CAMERA_AXIS_KEY_PRESSED = "ROTATE_CAMERA"
 
+        const val MOVE_LEFT_KEY = "MOVE_LEFT"
+        const val MOVE_RIGHT_KEY = "MOVE_RIGHT"
+        const val MOVE_UP_KEY = "MOVE_UP"
+        const val MOVE_DOWN_KEY = "DOWN_UP"
+
         const val ROTATE_CLOCKWISE_KEY = "ROTATE_CLOCKWISE"
         const val ROTATE_COUNTER_CLOCKWISE_KEY = "ROTATE_COUNTER_CLOCKWISE"
 
