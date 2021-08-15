@@ -162,10 +162,9 @@ class CameraManager(private val rootNode: Node,
         rotateCameraOnAxisZ(angle)
 
         if (viewMode != TOP_VIEW) {
-            val radius = calculateRotationRadius()
             val x = sin(angle)
             val y = 1 - cos(angle)
-            val delta = Vector3f(x, y, 0f) * radius
+            val delta = Vector3f(x, y, 0f) * calculateRotationRadius()
             cameraNode.move(rotateForCurrentAngle(delta))
         }
 
@@ -194,7 +193,10 @@ class CameraManager(private val rootNode: Node,
     }
 
     /**
-     * Distance between the camera (x, y) position and point that intersects with ground, if we trace a ray from the camera.
+     * Distance between the camera (x, y) position (i.e. projected position on the floor) and the point that intersects
+     * with the floor if we trace a ray from the camera. This is used to rotate the world from the player's point of view
+     * (by actually moving the [CameraNode] along a circle and rotate it at the same time)
+     *
      * This radius is proportional to Z (rotation radius is larger if we're far from the ground)
      */
     private fun calculateRotationRadius(): Float {
