@@ -47,7 +47,7 @@ class CameraManager(private val rootNode: Node,
     private val analogListener = CameraAnalogListener(this)
 
     private var mouseManager = MouseManager(inputManager)
-    private var cameraNode = initCameraNode(viewMode)
+    private var cameraNode = initCameraNode()
 
     private var cameraAngleZ = 0f
 
@@ -60,11 +60,6 @@ class CameraManager(private val rootNode: Node,
                 SWITCH_VIEW_KEY, TOP_VIEW_KEY, ISOMETRIC_VIEW_KEY)
 
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
-
-        if (viewMode == ISOMETRIC_VIEW) {
-            rotateOnWorldAxis(-QUARTER_PI)
-            initLocation(viewMode)
-        }
     }
 
     fun addDefaultKeyMappings() {
@@ -186,31 +181,35 @@ class CameraManager(private val rootNode: Node,
     }
 
     fun switchViewMode(newMode: ViewMode = viewMode.next()) {
-        initCameraNode(newMode)
         this.viewMode = newMode
+        initCameraNode()
     }
 
-    private fun initCameraNode(viewMode: ViewMode): CameraNode {
+    private fun initCameraNode(): CameraNode {
         cameraAngleZ = 0f
 
         rootNode.detachChildNamed(CAMERA_NODE)
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        initLocation(viewMode)
-        initRotation(viewMode)
+        initRotation()
+        initLocation()
 
         return cameraNode
     }
 
-    private fun initLocation(viewMode: ViewMode) {
-        val initLocation = initLocation[viewMode]!!
-        cameraNode.localTranslation = initLocation
-    }
-
-    private fun initRotation(viewMode: ViewMode) {
+    private fun initRotation() {
         val initRotation = initRotation[viewMode]!!
         cameraNode.rotate(initRotation.x, initRotation.y, initRotation.z)
+
+        if (viewMode == ISOMETRIC_VIEW) {
+            rotateOnWorldAxis(-QUARTER_PI)
+        }
+    }
+
+    private fun initLocation() {
+        val initLocation = initLocation[viewMode]!!
+        cameraNode.localTranslation = initLocation
     }
 
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
@@ -239,16 +238,16 @@ class CameraManager(private val rootNode: Node,
         const val MIN_Z = 2
         const val MAX_Z = 40
 
-        private val initLocation = mapOf(
-                TOP_VIEW to Vector3f(0f, 0f, 20f),
-                ISOMETRIC_VIEW to Vector3f(-15f, -15f, 18f)
-        )
-
         private val topViewInitRotation = Vector3f(PI, 0f, PI)
 
         private val initRotation = mapOf(
                 TOP_VIEW to topViewInitRotation + Vector3f(0f, 0f, 0f),
                 ISOMETRIC_VIEW to topViewInitRotation + Vector3f(-QUARTER_PI, 0f, 0f)
+        )
+
+        private val initLocation = mapOf(
+                TOP_VIEW to Vector3f(0f, 0f, 20f),
+                ISOMETRIC_VIEW to Vector3f(-15f, -15f, 18f)
         )
 
     }
