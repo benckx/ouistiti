@@ -16,6 +16,7 @@ import com.jme3.input.controls.KeyTrigger
 import com.jme3.input.controls.MouseAxisTrigger
 import com.jme3.input.controls.MouseButtonTrigger
 import com.jme3.math.FastMath.*
+import com.jme3.math.Vector2f
 import com.jme3.math.Vector3f
 import com.jme3.renderer.Camera
 import com.jme3.scene.CameraNode
@@ -91,11 +92,16 @@ class CameraManager(private val rootNode: Node,
         inputManager.addMapping(WHEEL_DOWN, MouseAxisTrigger(AXIS_WHEEL, true))
     }
 
+    fun switchViewMode(newMode: ViewMode = viewMode.next()) {
+        this.viewMode = newMode
+        initCameraNode()
+    }
+
     fun simpleUpdate(tpf: Float) {
         mouseManager.simpleUpdate()
         if (mouseManager.isCursorMoving() && isMovementClickPressed) {
             if (isRotationMovementPressed || isCameraRotationMovementPressed) {
-                val delta = if (viewMode == TOP_VIEW) -mouseManager.deltaY else mouseManager.deltaX
+                val delta = if (viewMode == TOP_VIEW) -mouseManager.cursorMovement().y else mouseManager.cursorMovement().x
                 if (isRotationMovementPressed) {
                     rotateOnWorldAxis(delta * tpf)
                 } else {
@@ -113,24 +119,9 @@ class CameraManager(private val rootNode: Node,
 
     private fun moveCameraBasedOnCursor() {
         // we multiply by -1 as we want to move in the opposite direction of the mouse
-        val mouseMovement = Vector3f(mouseManager.deltaX, mouseManager.deltaY, 0f)
         val movementSpeed = cameraSpeedCalculator.cameraMovementSpeed(cameraNode) * -1
-        cameraNode.move(rotateForCurrentAngle(mouseMovement * movementSpeed))
-    }
-
-    fun cameraZoom(value: Float) {
-        val currentZ = cameraNode.camera.location.z
-        val deltaZ = cameraSpeedCalculator.cameraZoomSpeed(value, cameraNode)
-        val targetZ = currentZ + deltaZ
-
-        if ((value < 0 && targetZ > MIN_Z) || (value > 0 && targetZ < MAX_Z)) {
-            val cameraMovement = when (viewMode) {
-                TOP_VIEW -> Vector3f(0f, 0f, deltaZ)
-                ISOMETRIC_VIEW -> Vector3f(0f, -deltaZ / 2, deltaZ / 2)
-            }
-
-            cameraNode.move(rotateForCurrentAngle(cameraMovement))
-        }
+        val cameraMovement = mouseManager.cursorMovement() * movementSpeed
+        cameraNode.move(rotateForCurrentAngle(cameraMovement))
     }
 
     /**
@@ -180,9 +171,19 @@ class CameraManager(private val rootNode: Node,
         return cameraNode.localTranslation.z * cos(QUARTER_PI)
     }
 
-    fun switchViewMode(newMode: ViewMode = viewMode.next()) {
-        this.viewMode = newMode
-        initCameraNode()
+    fun cameraZoom(value: Float) {
+        val currentZ = cameraNode.camera.location.z
+        val deltaZ = cameraSpeedCalculator.cameraZoomSpeed(value, cameraNode)
+        val targetZ = currentZ + deltaZ
+
+        if ((value < 0 && targetZ > MIN_Z) || (value > 0 && targetZ < MAX_Z)) {
+            val cameraMovement = when (viewMode) {
+                TOP_VIEW -> Vector3f(0f, 0f, deltaZ)
+                ISOMETRIC_VIEW -> Vector3f(0f, -deltaZ / 2, deltaZ / 2)
+            }
+
+            cameraNode.move(rotateForCurrentAngle(cameraMovement))
+        }
     }
 
     private fun initCameraNode(): CameraNode {
@@ -217,6 +218,13 @@ class CameraManager(private val rootNode: Node,
         val x = input.x * cos(cameraAngleZ) + input.y * sin(cameraAngleZ)
         val y = -(input.x * sin(cameraAngleZ)) + input.y * cos(cameraAngleZ)
         return Vector3f(x, y, input.z)
+    }
+
+    private fun rotateForCurrentAngle(input: Vector2f): Vector3f {
+        // found on https://en.wikipedia.org/wiki/Rotation_of_axes
+        val x = input.x * cos(cameraAngleZ) + input.y * sin(cameraAngleZ)
+        val y = -(input.x * sin(cameraAngleZ)) + input.y * cos(cameraAngleZ)
+        return Vector3f(x, y, 0f)
     }
 
     companion object {
