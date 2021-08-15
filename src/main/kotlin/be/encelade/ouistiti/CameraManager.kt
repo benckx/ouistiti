@@ -79,18 +79,31 @@ class CameraManager(private val rootNode: Node,
         inputManager.addMapping(MOVEMENT_KEY_PRESSED, MouseButtonTrigger(BUTTON_RIGHT))
     }
 
-    fun addQwertyWASDInputMappings() {
+    /**
+     * WASD mappings
+     */
+    fun addQwertyMovementInputMappings() {
         inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_A))
         inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
         inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
         inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
     }
 
-    fun addAzertyWASDInputMappings() {
+    /**
+     * Equivalent of WASD mappings, but for Azerty layouts
+     */
+    fun addAzertyMovementInputMappings() {
         inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_Q))
         inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
         inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
         inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
+    }
+
+    fun addArrowsMovementInputMappings() {
+        inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_LEFT))
+        inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_RIGHT))
+        inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_UP))
+        inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_DOWN))
     }
 
     fun addDefaultRotationInputMappings() {
@@ -134,17 +147,20 @@ class CameraManager(private val rootNode: Node,
         } else if (!isRotationClockwisePressed && isRotationCounterClockwisePressed) {
             rotateOnWorldAxis(-cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
         } else {
-            directionKeyPressed.filter { it.value }.keys.forEach { direction ->
-                val movement = rotateForCurrentAngle(direction.delta * tpf)
-                val speed = cameraSpeedCalculator.cameraKeySpeed(cameraNode)
-                cameraNode.move(movement * speed)
-            }
+            directionKeyPressed
+                    .filter { direction -> direction.value }
+                    .keys
+                    .forEach { direction ->
+                        val directionalMovement = rotateForCurrentAngle(direction.vector * tpf)
+                        val speed = cameraSpeedCalculator.keysMovementSpeed(cameraNode)
+                        cameraNode.move(directionalMovement * speed)
+                    }
         }
     }
 
     private fun moveCameraBasedOnCursor() {
         // we multiply by -1 as we want to move in the opposite direction of the mouse
-        val movementSpeed = cameraSpeedCalculator.cameraMovementSpeed(cameraNode) * -1
+        val movementSpeed = cameraSpeedCalculator.cursorMovementSpeed(cameraNode) * -1
         val cameraMovement = mouseManager.cursorMovement() * movementSpeed
         cameraNode.move(rotateForCurrentAngle(cameraMovement))
     }
@@ -198,7 +214,7 @@ class CameraManager(private val rootNode: Node,
 
     fun cameraZoom(value: Float) {
         val currentZ = cameraNode.camera.location.z
-        val deltaZ = cameraSpeedCalculator.cameraZoomSpeed(value, cameraNode)
+        val deltaZ = cameraSpeedCalculator.zoomSpeed(value, cameraNode)
         val targetZ = currentZ + deltaZ
 
         if ((value < 0 && targetZ > MIN_Z) || (value > 0 && targetZ < MAX_Z)) {
@@ -263,7 +279,7 @@ class CameraManager(private val rootNode: Node,
         const val MOVE_LEFT_KEY = "MOVE_LEFT"
         const val MOVE_RIGHT_KEY = "MOVE_RIGHT"
         const val MOVE_UP_KEY = "MOVE_UP"
-        const val MOVE_DOWN_KEY = "DOWN_UP"
+        const val MOVE_DOWN_KEY = "MOVE_DOWN"
 
         const val ROTATE_CLOCKWISE_KEY = "ROTATE_CLOCKWISE"
         const val ROTATE_COUNTER_CLOCKWISE_KEY = "ROTATE_COUNTER_CLOCKWISE"

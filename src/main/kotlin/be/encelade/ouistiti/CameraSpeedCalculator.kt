@@ -4,11 +4,11 @@ import com.jme3.scene.CameraNode
 
 interface CameraSpeedCalculator {
 
-    fun cameraMovementSpeed(cameraNode: CameraNode): Float
+    fun cursorMovementSpeed(cameraNode: CameraNode): Float
 
-    fun cameraKeySpeed(cameraNode: CameraNode): Float
+    fun keysMovementSpeed(cameraNode: CameraNode): Float
 
-    fun cameraZoomSpeed(value: Float, cameraNode: CameraNode): Float
+    fun zoomSpeed(value: Float, cameraNode: CameraNode): Float
 
     fun cameraRotationSpeed(cameraNode: CameraNode): Float
 

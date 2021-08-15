@@ -4,19 +4,19 @@ import com.jme3.scene.CameraNode
 
 open class DefaultCameraSpeedCalculator : CameraSpeedCalculator {
 
-    override fun cameraMovementSpeed(cameraNode: CameraNode): Float {
+    override fun cursorMovementSpeed(cameraNode: CameraNode): Float {
         // speed is proportional by Z axis (i.e. by distance from the floor),
         // so we move faster as we are more zoomed out
         return CAMERA_BASE_SPEED * cameraNode.camera.location.z
     }
 
-    override fun cameraKeySpeed(cameraNode: CameraNode): Float {
+    override fun keysMovementSpeed(cameraNode: CameraNode): Float {
         // speed is proportional by Z axis (i.e. by distance from the floor),
         // so we move faster as we are more zoomed out
         return CAMERA_KEY_SPEED * cameraNode.camera.location.z
     }
 
-    override fun cameraZoomSpeed(value: Float, cameraNode: CameraNode): Float {
+    override fun zoomSpeed(value: Float, cameraNode: CameraNode): Float {
         return ZOOM_BASE_SPEED * value
     }
 

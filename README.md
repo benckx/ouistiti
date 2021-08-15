@@ -65,7 +65,7 @@ class DemoSimpleApp : SimpleApplication() {
     override fun simpleUpdate(tpf: Float) {
         cameraManager.simpleUpdate(tpf)
     }
-  
+
 }
 ```
 
@@ -91,7 +91,7 @@ public static class DemoSimpleApp extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         cameraManager.simpleUpdate(tpf);
     }
-    
+
 }
 ```
 
@@ -132,6 +132,7 @@ https://github.com/benckx/ouistiti-java-sample
     * Either on the camera axis
     * Before these changes, only 90° fixed rotations were enabled, therefore `SIDE_VIEW` has been removed (since it's
       now a specific case of the `ISOMETRIC_VIEW`). The 2 modes remaining are `TOP_VIEW` and `ISOMETRIC_VIEW`.
+* Move with WASD keys
 * Upgrade Kotlin from 1.4.20 to 1.5.21
 * Upgrade JME from 3.3.2-stable to 3.4.0-stable
 
