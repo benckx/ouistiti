@@ -4,7 +4,7 @@
 
 # About
 
-A basic camera system for a management game for jMonkeyEngine, that I developed while working on my
+A basic camera system for a 3D management game for jMonkeyEngine, that I developed while working on my
 game *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
 
 *Ouistiti* is French for marmoset.
@@ -21,12 +21,14 @@ Default key mappings can be overridden.
 
 * Move camera by holding right click
 * Zoom in and out with the mouse wheel
-* Switch view with **V** (or use **T** for Top View, **S** for Side View, **I** for Isometric View)
+* Switch view with **V** (or use **T** for Top View, **I** for Isometric View)
 * Rotate with **B** (counter-clockwise) and **N** (clockwise)
 * Rotate on "world axis" (from player's perspective, the world rotates) by holding right click + keep left Control
   pressed
 * Rotate on "camera axis" (from player's perspective, camera rotates like a security camera) by holding right click +
   keep left Shift pressed
+
+It's assumed the floor is in the XY plane.
 
 # Usage
 
@@ -67,7 +69,7 @@ public static class MyJavaApp extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        cameraManager = new CameraManager(this, ISO_VIEW);
+        cameraManager = new CameraManager(this);
         cameraManager.addDefaultKeyMappings();
     }
 
@@ -113,7 +115,7 @@ https://github.com/benckx/ouistiti-java-sample
     }
     
     dependencies {
-        compile "com.github.benckx:ouistiti:1.7"
+        compile "com.github.benckx:ouistiti:2.0"
     }
 
 # Change log
@@ -121,9 +123,10 @@ https://github.com/benckx/ouistiti-java-sample
 ## Version 2.0
 
 * Rotation:
-    * Either on "world axis"
+    * Either on "world axis" (the world rotates)
     * Either on the camera axis
-    * Before these changes, only 90° fixed rotations were enabled
+    * Before these changes, only 90° fixed rotations were enabled, therefore SIDE_VIEW has been removed (since it's now
+      a specific case of the isometric view)
 * Upgrade Kotlin from 1.4.20 to 1.5.21
 * Upgrade JME from 3.3.2-stable to 3.4.0-stable
 
