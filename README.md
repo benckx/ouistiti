@@ -23,7 +23,10 @@ Default key mappings can be overridden.
 * Zoom in and out with the mouse wheel
 * Switch view with **V** (or use **T** for Top View, **S** for Side View, **I** for Isometric View)
 * Rotate with **B** (counter-clockwise) and **N** (clockwise)
-* Rotate by holding right click + keep left control pressed
+* Rotate on "world axis" (from player's perspective, the world rotates) by holding right click + keep left Control
+  pressed
+* Rotate on "camera axis" (from player's perspective, camera rotates like a security camera) by holding right click +
+  keep left Shift pressed
 
 # Usage
 
@@ -115,12 +118,12 @@ https://github.com/benckx/ouistiti-java-sample
 
 # Change log
 
-## Version 1.3
+## Version 2.0
 
 * Rotation:
-    * Either on "world axis" (from player's perspective, the world rotates)
-    * Either on the camera axis (from player's perspective, camera rotates like a security camera)
-    * Before these change, only 90° fixed rotations were enabled
+    * Either on "world axis"
+    * Either on the camera axis
+    * Before these changes, only 90° fixed rotations were enabled
 * Upgrade Kotlin from 1.4.20 to 1.5.21
 * Upgrade JME from 3.3.2-stable to 3.4.0-stable
 

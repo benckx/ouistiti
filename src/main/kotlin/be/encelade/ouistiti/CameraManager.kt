@@ -177,15 +177,17 @@ class CameraManager(private val rootNode: Node,
     private fun resetCameraNode(viewMode: ViewMode): CameraNode {
         cameraAngleZ = 0f
 
+        val initRotation = initRotation[viewMode]!!
+        val initLocation = initLocation[viewMode]!!
+
         rootNode.detachChildNamed(CAMERA_NODE)
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        val initRotation = initRotation[viewMode]!!
         cameraNode.rotate(initRotation.x, initRotation.y, initRotation.z)
 
         cameraNode.camera.location = Vector3f(0f, 0f, 0f)
-        cameraNode.move(initLocation[viewMode]!!)
+        cameraNode.move(initLocation)
 
         return cameraNode
     }
