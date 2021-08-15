@@ -137,12 +137,12 @@ class CameraManager(private val rootNode: Node,
      * Rotate [CameraNode] on its Z axis, without changing the value of "cameraAngleZ"
      */
     private fun rotateCameraOnAxisZ(angle: Float) {
-        val baseRotation = baseRotation[viewMode]!!
+        val baseRotation = initRotation[viewMode]!!
         val revertBaseRotation = baseRotation * -1f
 
-        cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, revertBaseRotation.y)
+        cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, 0f)
         cameraNode.rotate(0f, 0f, angle)
-        cameraNode.rotate(baseRotation.x, baseRotation.y, baseRotation.y)
+        cameraNode.rotate(baseRotation.x, baseRotation.y, 0f)
     }
 
     /**
@@ -181,11 +181,11 @@ class CameraManager(private val rootNode: Node,
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        val rotation = baseRotation[viewMode]!!
-        cameraNode.rotate(rotation.x, rotation.y, rotation.z)
+        val initRotation = initRotation[viewMode]!!
+        cameraNode.rotate(initRotation.x, initRotation.y, initRotation.z)
 
         cameraNode.camera.location = Vector3f(0f, 0f, 0f)
-        cameraNode.move(baseLocation[viewMode]!!)
+        cameraNode.move(initLocation[viewMode]!!)
 
         return cameraNode
     }
@@ -230,18 +230,18 @@ class CameraManager(private val rootNode: Node,
         const val MIN_Z = 2
         const val MAX_Z = 40
 
-        private val baseLocation = mapOf(
+        private val initLocation = mapOf(
                 TOP_VIEW to Vector3f(0f, 0f, 20f),
                 SIDE_VIEW to Vector3f(0f, -18f, 20f),
                 ISO_VIEW to Vector3f(-13f, -13f, 18f)
         )
 
-        private val topViewRotation = Vector3f(PI, 0f, PI)
+        private val topViewInitRotation = Vector3f(PI, 0f, PI)
 
-        private val baseRotation = mapOf(
-                TOP_VIEW to topViewRotation + Vector3f(0f, 0f, 0f),
-                SIDE_VIEW to topViewRotation + Vector3f(-QUARTER_PI, 0f, 0f),
-                ISO_VIEW to topViewRotation + Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
+        private val initRotation = mapOf(
+                TOP_VIEW to topViewInitRotation + Vector3f(0f, 0f, 0f),
+                SIDE_VIEW to topViewInitRotation + Vector3f(-QUARTER_PI, 0f, 0f),
+                ISO_VIEW to topViewInitRotation + Vector3f(-QUARTER_PI, 0f, -QUARTER_PI)
         )
 
     }
