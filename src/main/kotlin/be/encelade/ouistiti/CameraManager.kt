@@ -57,7 +57,7 @@ class CameraManager(private val rootNode: Node,
 
         inputManager.addListener(actionListener, MOVEMENT_KEY_PRESSED, ROTATE_WORLD_AXIS_KEY_PRESSED, ROTATE_CAMERA_AXIS_KEY_PRESSED,
                 ROTATE_COUNTER_CLOCKWISE_KEY, ROTATE_CLOCKWISE_KEY,
-                SWITCH_VIEW_KEY, TOP_VIEW_KEY, SIDE_VIEW_KEY)
+                SWITCH_VIEW_KEY, TOP_VIEW_KEY, ISOMETRIC_VIEW_KEY)
 
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
 
@@ -88,7 +88,7 @@ class CameraManager(private val rootNode: Node,
     fun addDefaultSwitchViewInputMappings() {
         inputManager.addMapping(SWITCH_VIEW_KEY, KeyTrigger(KEY_V))
         inputManager.addMapping(TOP_VIEW_KEY, KeyTrigger(KEY_T))
-        inputManager.addMapping(SIDE_VIEW_KEY, KeyTrigger(KEY_S))
+        inputManager.addMapping(ISOMETRIC_VIEW_KEY, KeyTrigger(KEY_I))
     }
 
     fun addDefaultMouseWheelInputMappings() {
@@ -107,7 +107,7 @@ class CameraManager(private val rootNode: Node,
                     rotateOnCameraAxis(delta * tpf)
                 }
             } else {
-                moveCamera(tpf)
+                moveCameraBasedOnCursor()
             }
         } else if (isRotationClockwisePressed && !isRotationCounterClockwisePressed) {
             rotateOnWorldAxis(cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
@@ -116,16 +116,16 @@ class CameraManager(private val rootNode: Node,
         }
     }
 
-    private fun moveCamera(tpf: Float) {
+    private fun moveCameraBasedOnCursor() {
         // we multiply by -1 as we want to move in the opposite direction of the mouse
         val mouseMovement = Vector3f(mouseManager.deltaX, mouseManager.deltaY, 0f)
-        val movementSpeed = cameraSpeedCalculator.cameraMovementSpeed(tpf, cameraNode) * -1
+        val movementSpeed = cameraSpeedCalculator.cameraMovementSpeed(cameraNode) * -1
         cameraNode.move(rotateForCurrentAngle(mouseMovement * movementSpeed))
     }
 
-    fun cameraZoom(value: Float, tpf: Float) {
+    fun cameraZoom(value: Float) {
         val currentZ = cameraNode.camera.location.z
-        val deltaZ = cameraSpeedCalculator.cameraZoomSpeed(tpf, value, cameraNode)
+        val deltaZ = cameraSpeedCalculator.cameraZoomSpeed(value, cameraNode)
         val targetZ = currentZ + deltaZ
 
         if ((value < 0 && targetZ > MIN_Z) || (value > 0 && targetZ < MAX_Z)) {
@@ -233,7 +233,7 @@ class CameraManager(private val rootNode: Node,
 
         const val SWITCH_VIEW_KEY = "SWITCH_VIEW"
         const val TOP_VIEW_KEY = "TOP_VIEW"
-        const val SIDE_VIEW_KEY = "SIDE_VIEW"
+        const val ISOMETRIC_VIEW_KEY = "ISOMETRIC_VIEW"
 
         // TODO: also make those configurable
         const val MIN_Z = 2

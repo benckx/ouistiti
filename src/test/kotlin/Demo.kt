@@ -6,9 +6,10 @@ import com.jme3.system.AppSettings
 
 fun main() {
     val settings = AppSettings(true)
+    settings.title = "ouistiti demo"
     settings.isFullscreen = false
     settings.isVSync = false
-    settings.title = "ouistiti demo"
+    settings.samples = 16
     settings.setResolution(1920, 1080)
 
     val simpleApp = DemoSimpleApp()

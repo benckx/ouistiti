@@ -25,4 +25,5 @@ class MouseManager(private val inputManager: InputManager) {
             previousCursorPosition = Vector2f(currentPosition)
         }
     }
+
 }
