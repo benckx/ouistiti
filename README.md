@@ -4,7 +4,8 @@
 
 # About
 
-A basic camera system for a 3D management game for jMonkeyEngine, that I developed while working on my
+A basic camera system for a 3D management game for <a href="https://jmonkeyengine.org">jMonkeyEngine</a>
+and <a href="https://www.lwjgl.org/">LWJGL</a>, that I developed while working on my
 game *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*
 
 *Ouistiti* is French for marmoset.
@@ -32,13 +33,25 @@ It's assumed the floor is in the XY plane.
 
 # Usage
 
+## Import with Gradle
+
+```groovy
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile "com.github.benckx:ouistiti:2.0"
+}
+```
+
 ## Kotlin
 
 ```kotlin
 import be.encelade.ouistiti.CameraManager
 import com.jme3.app.SimpleApplication
 
-//..
+//...
 
 class DemoSimpleApp : SimpleApplication() {
 
@@ -108,16 +121,6 @@ https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
 Sample project with Gradle configuration (Java 8):<br/>
 https://github.com/benckx/ouistiti-java-sample
 
-# Import with Gradle
-
-    repositories {
-        maven { url "https://jitpack.io" }
-    }
-    
-    dependencies {
-        compile "com.github.benckx:ouistiti:2.0"
-    }
-
 # Change log
 
 ## Version 2.0
@@ -125,8 +128,8 @@ https://github.com/benckx/ouistiti-java-sample
 * Rotation:
     * Either on "world axis" (the world rotates)
     * Either on the camera axis
-    * Before these changes, only 90° fixed rotations were enabled, therefore SIDE_VIEW has been removed (since it's now
-      a specific case of the isometric view)
+    * Before these changes, only 90° fixed rotations were enabled, therefore `SIDE_VIEW` has been removed (since it's
+      now a specific case of the `ISOMETRIC_VIEW`). The 2 modes remaining are `TOP_VIEW` and `ISOMETRIC_VIEW`.
 * Upgrade Kotlin from 1.4.20 to 1.5.21
 * Upgrade JME from 3.3.2-stable to 3.4.0-stable
 
