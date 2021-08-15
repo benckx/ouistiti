@@ -65,6 +65,7 @@ class DemoSimpleApp : SimpleApplication() {
     override fun simpleUpdate(tpf: Float) {
         cameraManager.simpleUpdate(tpf)
     }
+  
 }
 ```
 
@@ -76,7 +77,7 @@ import com.jme3.app.SimpleApplication;
 
 // ...
 
-public static class MyJavaApp extends SimpleApplication {
+public static class DemoSimpleApp extends SimpleApplication {
 
     CameraManager cameraManager;
 
@@ -90,6 +91,7 @@ public static class MyJavaApp extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         cameraManager.simpleUpdate(tpf);
     }
+    
 }
 ```
 

@@ -11,8 +11,7 @@ open class DefaultCameraSpeedCalculator : CameraSpeedCalculator {
     }
 
     override fun cameraZoomSpeed(value: Float, cameraNode: CameraNode): Float {
-        val currentZ = cameraNode.camera.location.z
-        return ZOOM_BASE_SPEED * value * currentZ
+        return ZOOM_BASE_SPEED * value
     }
 
     override fun cameraRotationSpeed(cameraNode: CameraNode): Float {
@@ -22,7 +21,7 @@ open class DefaultCameraSpeedCalculator : CameraSpeedCalculator {
     companion object {
 
         const val CAMERA_BASE_SPEED = 0.0005f
-        const val ZOOM_BASE_SPEED = 0.10f
+        const val ZOOM_BASE_SPEED = 2f
         const val ROTATION_BASE_SPEED = 4f
 
     }
