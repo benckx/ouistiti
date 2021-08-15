@@ -113,7 +113,8 @@ https://github.com/benckx/ouistiti-java-sample
 
 ## Camera Speed
 
-Implement the following interface and pass it as parameter of `CameraManager` to customize the movement speed.
+Implement the following interface and pass it as parameter of `CameraManager` to customize the movement speed (excluding
+the `tpf`).
 
 ```kotlin
 
