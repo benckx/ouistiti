@@ -33,6 +33,9 @@ class CameraManager(private val rootNode: Node,
                 cameraSpeedCalculator: CameraSpeedCalculator = DefaultCameraSpeedCalculator()) :
             this(app.rootNode, app.camera, app.flyByCamera, app.inputManager, viewMode, cameraSpeedCalculator)
 
+    /**
+     * Is right-click pressed?
+     */
     internal var isMovementClickPressed = false
     internal var isRotationMovementPressed = false
     internal var isCameraRotationMovementPressed = false
@@ -60,6 +63,7 @@ class CameraManager(private val rootNode: Node,
 
         if (viewMode == ISOMETRIC_VIEW) {
             rotateOnWorldAxis(-QUARTER_PI)
+            initLocation(viewMode)
         }
     }
 
@@ -113,13 +117,10 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun moveCamera(tpf: Float) {
-        // we multiply by -1 at the end because we want to move in the opposite direction of the mouse
+        // we multiply by -1 as we want to move in the opposite direction of the mouse
         val mouseMovement = Vector3f(mouseManager.deltaX, mouseManager.deltaY, 0f)
         val movementSpeed = cameraSpeedCalculator.cameraMovementSpeed(tpf, cameraNode) * -1
-        val actualCameraMovement = rotateForCurrentAngle(mouseMovement * movementSpeed)
-        cameraNode.move(actualCameraMovement)
-
-        println("${cameraNode.localTranslation}")
+        cameraNode.move(rotateForCurrentAngle(mouseMovement * movementSpeed))
     }
 
     fun cameraZoom(value: Float, tpf: Float) {
@@ -167,7 +168,7 @@ class CameraManager(private val rootNode: Node,
     /**
      * Rotate [CameraNode] on its Z axis, without changing the value of "cameraAngleZ"
      */
-    fun rotateCameraOnAxisZ(angle: Float) {
+    private fun rotateCameraOnAxisZ(angle: Float) {
         val baseRotation = initRotation[viewMode]!!
         val revertBaseRotation = baseRotation * -1f
 
@@ -196,13 +197,20 @@ class CameraManager(private val rootNode: Node,
         cameraNode = CameraNode(CAMERA_NODE, camera)
         rootNode.attachChild(cameraNode)
 
-        val initLocation = initLocation[viewMode]!!
-        val initRotation = initRotation[viewMode]!!
-
-        cameraNode.move(rotateForCurrentAngle(initLocation))
-        cameraNode.rotate(initRotation.x, initRotation.y, initRotation.z)
+        initLocation(viewMode)
+        initRotation(viewMode)
 
         return cameraNode
+    }
+
+    private fun initLocation(viewMode: ViewMode) {
+        val initLocation = initLocation[viewMode]!!
+        cameraNode.localTranslation = initLocation
+    }
+
+    private fun initRotation(viewMode: ViewMode) {
+        val initRotation = initRotation[viewMode]!!
+        cameraNode.rotate(initRotation.x, initRotation.y, initRotation.z)
     }
 
     private fun rotateForCurrentAngle(input: Vector3f): Vector3f {
