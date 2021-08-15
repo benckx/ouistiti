@@ -55,6 +55,7 @@ class CameraManager(private val rootNode: Node,
     private var cameraAngleZ = 0f
 
     init {
+        inputManager.clearMappings()
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
@@ -70,6 +71,7 @@ class CameraManager(private val rootNode: Node,
 
     fun addDefaultKeyMappings() {
         addDefaultRightClickInputMappings()
+        addWASDMovementInputMappings()
         addDefaultRotationInputMappings()
         addDefaultSwitchViewInputMappings()
         addDefaultMouseWheelInputMappings()
@@ -79,21 +81,8 @@ class CameraManager(private val rootNode: Node,
         inputManager.addMapping(MOVEMENT_KEY_PRESSED, MouseButtonTrigger(BUTTON_RIGHT))
     }
 
-    /**
-     * WASD mappings
-     */
-    fun addQwertyMovementInputMappings() {
+    fun addWASDMovementInputMappings() {
         inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_A))
-        inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
-        inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
-        inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
-    }
-
-    /**
-     * Equivalent of WASD mappings, but for Azerty layouts
-     */
-    fun addAzertyMovementInputMappings() {
-        inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_Q))
         inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
         inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
         inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
