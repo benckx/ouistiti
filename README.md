@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.benckx:ouistiti:1.2"
+    compile "com.github.benckx:ouistiti:2.0"
 }
 ```
 
