@@ -10,7 +10,8 @@ fun main() {
     settings.isFullscreen = false
     settings.isVSync = false
     settings.samples = 16
-    settings.setResolution(1920, 1080)
+//    settings.setResolution(1920, 1080)
+    settings.setResolution(1280, 720)
 
     val simpleApp = DemoSimpleApp()
     simpleApp.setSettings(settings)

@@ -59,10 +59,10 @@ class CameraManager(private val rootNode: Node,
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOVE_LEFT_KEY, MOVE_RIGHT_KEY, MOVE_DOWN_KEY, MOVE_UP_KEY,
-                MOVEMENT_KEY_PRESSED, ROTATE_WORLD_AXIS_KEY_PRESSED, ROTATE_CAMERA_AXIS_KEY_PRESSED,
-                ROTATE_COUNTER_CLOCKWISE_KEY, ROTATE_CLOCKWISE_KEY,
-                SWITCH_VIEW_KEY, TOP_VIEW_KEY, ISOMETRIC_VIEW_KEY)
+        inputManager.addListener(actionListener, MOVE_LEFT_ACTION, MOVE_RIGHT_ACTION, MOVE_DOWN_ACTION, MOVE_UP_ACTION,
+                MOUSE_MOVEMENT_ACTION, ROTATE_WORLD_AXIS_ACTION, ROTATE_CAMERA_AXIS_ACTION,
+                ROTATE_COUNTER_CLOCKWISE_ACTION, ROTATE_CLOCKWISE_ACTION,
+                SWITCH_VIEW_ACTION, TOP_VIEW_ACTION, ISOMETRIC_VIEW_ACTION)
 
         inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
 
@@ -78,34 +78,34 @@ class CameraManager(private val rootNode: Node,
     }
 
     fun addDefaultRightClickInputMappings() {
-        inputManager.addMapping(MOVEMENT_KEY_PRESSED, MouseButtonTrigger(BUTTON_RIGHT))
+        inputManager.addMapping(MOUSE_MOVEMENT_ACTION, MouseButtonTrigger(BUTTON_RIGHT))
     }
 
     fun addWASDMovementInputMappings() {
-        inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_A))
-        inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_D))
-        inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_W))
-        inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_S))
+        inputManager.addMapping(MOVE_LEFT_ACTION, KeyTrigger(KEY_A))
+        inputManager.addMapping(MOVE_RIGHT_ACTION, KeyTrigger(KEY_D))
+        inputManager.addMapping(MOVE_UP_ACTION, KeyTrigger(KEY_W))
+        inputManager.addMapping(MOVE_DOWN_ACTION, KeyTrigger(KEY_S))
     }
 
     fun addArrowsMovementInputMappings() {
-        inputManager.addMapping(MOVE_LEFT_KEY, KeyTrigger(KEY_LEFT))
-        inputManager.addMapping(MOVE_RIGHT_KEY, KeyTrigger(KEY_RIGHT))
-        inputManager.addMapping(MOVE_UP_KEY, KeyTrigger(KEY_UP))
-        inputManager.addMapping(MOVE_DOWN_KEY, KeyTrigger(KEY_DOWN))
+        inputManager.addMapping(MOVE_LEFT_ACTION, KeyTrigger(KEY_LEFT))
+        inputManager.addMapping(MOVE_RIGHT_ACTION, KeyTrigger(KEY_RIGHT))
+        inputManager.addMapping(MOVE_UP_ACTION, KeyTrigger(KEY_UP))
+        inputManager.addMapping(MOVE_DOWN_ACTION, KeyTrigger(KEY_DOWN))
     }
 
     fun addDefaultRotationInputMappings() {
-        inputManager.addMapping(ROTATE_WORLD_AXIS_KEY_PRESSED, KeyTrigger(KEY_LCONTROL))
-        inputManager.addMapping(ROTATE_CAMERA_AXIS_KEY_PRESSED, KeyTrigger(KEY_LSHIFT))
-        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_KEY, KeyTrigger(KEY_B))
-        inputManager.addMapping(ROTATE_CLOCKWISE_KEY, KeyTrigger(KEY_N))
+        inputManager.addMapping(ROTATE_WORLD_AXIS_ACTION, KeyTrigger(KEY_LCONTROL))
+        inputManager.addMapping(ROTATE_CAMERA_AXIS_ACTION, KeyTrigger(KEY_LSHIFT))
+        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_ACTION, KeyTrigger(KEY_B))
+        inputManager.addMapping(ROTATE_CLOCKWISE_ACTION, KeyTrigger(KEY_N))
     }
 
     fun addDefaultSwitchViewInputMappings() {
-        inputManager.addMapping(SWITCH_VIEW_KEY, KeyTrigger(KEY_V))
-        inputManager.addMapping(TOP_VIEW_KEY, KeyTrigger(KEY_T))
-        inputManager.addMapping(ISOMETRIC_VIEW_KEY, KeyTrigger(KEY_I))
+        inputManager.addMapping(SWITCH_VIEW_ACTION, KeyTrigger(KEY_V))
+        inputManager.addMapping(TOP_VIEW_ACTION, KeyTrigger(KEY_T))
+        inputManager.addMapping(ISOMETRIC_VIEW_ACTION, KeyTrigger(KEY_I))
     }
 
     fun addDefaultMouseWheelInputMappings() {
@@ -137,7 +137,7 @@ class CameraManager(private val rootNode: Node,
             rotateOnWorldAxis(-cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
         } else {
             directionKeyPressed
-                    .filter { direction -> direction.value }
+                    .filter { directionKeyPressed -> directionKeyPressed.value }
                     .keys
                     .forEach { direction ->
                         val directionalMovement = rotateForCurrentAngle(direction.vector * tpf)
@@ -260,21 +260,21 @@ class CameraManager(private val rootNode: Node,
 
         const val CAMERA_NODE = "CAMERA_NODE"
 
-        const val MOVEMENT_KEY_PRESSED = "MOUSE_RIGHT_CLICK"
-        const val ROTATE_WORLD_AXIS_KEY_PRESSED = "ROTATE_WORLD"
-        const val ROTATE_CAMERA_AXIS_KEY_PRESSED = "ROTATE_CAMERA"
+        const val MOUSE_MOVEMENT_ACTION = "MOUSE_MOVEMENT"
+        const val ROTATE_WORLD_AXIS_ACTION = "ROTATE_WORLD"
+        const val ROTATE_CAMERA_AXIS_ACTION = "ROTATE_CAMERA"
 
-        const val MOVE_LEFT_KEY = "MOVE_LEFT"
-        const val MOVE_RIGHT_KEY = "MOVE_RIGHT"
-        const val MOVE_UP_KEY = "MOVE_UP"
-        const val MOVE_DOWN_KEY = "MOVE_DOWN"
+        const val MOVE_LEFT_ACTION = "MOVE_LEFT"
+        const val MOVE_RIGHT_ACTION = "MOVE_RIGHT"
+        const val MOVE_UP_ACTION = "MOVE_UP"
+        const val MOVE_DOWN_ACTION = "MOVE_DOWN"
 
-        const val ROTATE_CLOCKWISE_KEY = "ROTATE_CLOCKWISE"
-        const val ROTATE_COUNTER_CLOCKWISE_KEY = "ROTATE_COUNTER_CLOCKWISE"
+        const val ROTATE_COUNTER_CLOCKWISE_ACTION = "ROTATE_COUNTER_CLOCKWISE"
+        const val ROTATE_CLOCKWISE_ACTION = "ROTATE_CLOCKWISE"
 
-        const val SWITCH_VIEW_KEY = "SWITCH_VIEW"
-        const val TOP_VIEW_KEY = "TOP_VIEW"
-        const val ISOMETRIC_VIEW_KEY = "ISOMETRIC_VIEW"
+        const val SWITCH_VIEW_ACTION = "SWITCH_VIEW"
+        const val TOP_VIEW_ACTION = "TOP_VIEW"
+        const val ISOMETRIC_VIEW_ACTION = "ISOMETRIC_VIEW"
 
         // TODO: also make those configurable
         const val MIN_Z = 2
