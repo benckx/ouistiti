@@ -86,8 +86,8 @@ public static class DemoSimpleApp extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-      cameraManager = new CameraManager(this, ISOMETRIC_VIEW, new DefaultCameraSpeedCalculator());
-      cameraManager.addDefaultKeyMappings();
+        cameraManager = new CameraManager(this, ISOMETRIC_VIEW, new DefaultCameraSpeedCalculator());
+        cameraManager.addDefaultKeyMappings();
     }
 
     @Override
@@ -106,8 +106,8 @@ https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
 
 ## In Java
 
-Sample project with Gradle configuration (Java 8):<br/>
-https://github.com/benckx/ouistiti-java-sample
+In a separate Java only sample project:<br/>
+https://github.com/benckx/ouistiti-java-sample/blob/master/src/test/java/TestCameraManagerJava.java
 
 # Configuration
 
