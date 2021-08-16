@@ -27,5 +27,4 @@ dependencies {
     implementation "com.github.benckx.chimp-utils:chimp-utils-jme3:$chimpUtilsVersion"
 
     testImplementation "org.jmonkeyengine:jme3-lwjgl3:$jmeVersion"
-    testImplementation "org.jmonkeyengine:jme3-plugins:$jmeVersion"
 }
