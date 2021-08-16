@@ -86,8 +86,8 @@ public static class DemoSimpleApp extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        cameraManager = new CameraManager(this);
-        cameraManager.addDefaultKeyMappings();
+      cameraManager = new CameraManager(this, ISOMETRIC_VIEW, new DefaultCameraSpeedCalculator());
+      cameraManager.addDefaultKeyMappings();
     }
 
     @Override
