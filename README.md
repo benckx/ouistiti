@@ -152,7 +152,7 @@ interface CameraSpeedCalculator {
 * Update Kotlin from 1.4.10 to 1.4.20
 * Add more customizations settings (split `CameraSpeedCalculator`, split the different default key mappings, etc.)
 
-# Related Project
+# Related Projects
 
 * **ouistiti**: A basic camera manager for management/strategy games:<br/>
   https://github.com/benckx/ouistiti
