@@ -8,7 +8,7 @@ A basic camera system for 3D management/strategy games for <a href="https://jmon
 / <a href="https://www.lwjgl.org/">LWJGL</a>, that I developed while working on my game side
 project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*.
 
-*Ouistiti* is French for marmoset.
+*Ouistiti* is French for [Callithrix](https://en.wikipedia.org/wiki/Callithrix).
 
 ![https://www.youtube.com/watch?v=s6HhQtTJuFI](images/demo.png)
 
@@ -142,7 +142,7 @@ interface CameraSpeedCalculator {
     * Either on the camera axis
     * Before these changes, only 90° fixed rotations were enabled, therefore `SIDE_VIEW` has been removed (since it's
       now a specific case of the `ISOMETRIC_VIEW`). The 2 modes remaining are `TOP_VIEW` and `ISOMETRIC_VIEW`.
-* Move with WASD keys
+* Move with WASD keys or arrow keys
 * Upgrade Kotlin from 1.4.20 to 1.5.21
 * Upgrade JME from 3.3.2-stable to 3.4.0-stable
 
@@ -154,9 +154,9 @@ interface CameraSpeedCalculator {
 
 # Related Project
 
-Collection Kotlin of APIs and Helper:
-
-* https://github.com/benckx/chimp-utils
-
-If I manage to extract re-usable management game features from my game, I would move them to the ouistiti project, while
-more generic / engine-related components would be added here in the chimp-utils project.
+* **ouistiti**: A basic camera manager for management/strategy games:<br/>
+  https://github.com/benckx/ouistiti
+* **chimp-utils**: A collection of Kotlin APIs and helpers for jMonkeyEngine:<br/>
+  https://github.com/benckx/chimp-utils
+* **jme-asset-viewer**: Minimalist GUI to preview/test 3D assets in a jMonkeyEngine scene:<br/>
+  https://github.com/benckx/jme-asset-viewer
