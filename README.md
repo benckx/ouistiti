@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.benckx:ouistiti:2.0"
+    compile "com.github.benckx:ouistiti:2.1.0"
 }
 ```
 
@@ -134,6 +134,11 @@ interface CameraSpeedCalculator {
 ```
 
 # Change log
+
+## Version 2.1.0
+
+* Upgrade Kotlin from `1.5.21` to `1.6.21`
+* Upgrade [jMonkeyEngine3](https://jmonkeyengine.org/) from `3.4.0-stable` to `3.5.2-stable`
 
 ## Version 2.0
 
