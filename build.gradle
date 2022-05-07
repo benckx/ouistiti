@@ -14,7 +14,6 @@ def chimpUtilsVersion = "1.7.0"
 
 apply plugin: 'kotlin'
 apply plugin: 'idea'
-apply plugin: 'maven'
 
 dependencies {
     api "org.jmonkeyengine:jme3-core:$jmeVersion"

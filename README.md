@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.benckx:ouistiti:2.1.0"
+    compile "com.github.benckx:ouistiti:2.1.1"
 }
 ```
 
@@ -134,6 +134,10 @@ interface CameraSpeedCalculator {
 ```
 
 # Change log
+
+## Version 2.1.1
+
+* Nothing changed, previous release failed
 
 ## Version 2.1.0
 
