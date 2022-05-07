@@ -1,14 +1,15 @@
 package be.encelade.ouistiti
 
+import be.encelade.chimp.tpf.TpfReceiver
 import com.jme3.input.InputManager
 import com.jme3.math.Vector2f
 
-class MouseManager(private val inputManager: InputManager) {
+class MouseManager(private val inputManager: InputManager) : TpfReceiver {
 
     private var previousCursorPosition = Vector2f(inputManager.cursorPosition)
     private var cursorMovement = Vector2f(0f, 0f)
 
-    fun simpleUpdate() {
+    override fun simpleUpdate(tpf: Float) {
         updateCursorSpeed(inputManager.cursorPosition)
     }
 

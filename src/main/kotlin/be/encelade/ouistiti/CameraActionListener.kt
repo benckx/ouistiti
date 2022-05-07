@@ -2,14 +2,14 @@ package be.encelade.ouistiti
 
 import be.encelade.ouistiti.CameraManager.Companion.ISOMETRIC_VIEW_ACTION
 import be.encelade.ouistiti.CameraManager.Companion.MOUSE_MOVEMENT_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_DOWN_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_LEFT_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_RIGHT_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_UP_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CAMERA_AXIS_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.MOVE_DOWN
+import be.encelade.ouistiti.CameraManager.Companion.MOVE_LEFT
+import be.encelade.ouistiti.CameraManager.Companion.MOVE_RIGHT
+import be.encelade.ouistiti.CameraManager.Companion.MOVE_UP
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CAMERA_AXIS_WITH_MOUSE
 import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CLOCKWISE_ACTION
 import be.encelade.ouistiti.CameraManager.Companion.ROTATE_COUNTER_CLOCKWISE_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_WORLD_AXIS_ACTION
+import be.encelade.ouistiti.CameraManager.Companion.ROTATE_WORLD_AXIS_WITH_MOUSE
 import be.encelade.ouistiti.CameraManager.Companion.SWITCH_VIEW_ACTION
 import be.encelade.ouistiti.CameraManager.Companion.TOP_VIEW_ACTION
 import be.encelade.ouistiti.Direction.*
@@ -22,12 +22,12 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
         when (name) {
             MOUSE_MOVEMENT_ACTION -> cameraManager.isMovementClickPressed = isPressed
-            MOVE_LEFT_ACTION -> cameraManager.directionKeyPressed[LEFT] = isPressed
-            MOVE_RIGHT_ACTION -> cameraManager.directionKeyPressed[RIGHT] = isPressed
-            MOVE_UP_ACTION -> cameraManager.directionKeyPressed[UP] = isPressed
-            MOVE_DOWN_ACTION -> cameraManager.directionKeyPressed[DOWN] = isPressed
-            ROTATE_WORLD_AXIS_ACTION -> cameraManager.isRotationMovementPressed = isPressed
-            ROTATE_CAMERA_AXIS_ACTION -> cameraManager.isCameraRotationMovementPressed = isPressed
+            MOVE_LEFT -> cameraManager.directionKeyPressed[LEFT] = isPressed
+            MOVE_RIGHT -> cameraManager.directionKeyPressed[RIGHT] = isPressed
+            MOVE_UP -> cameraManager.directionKeyPressed[UP] = isPressed
+            MOVE_DOWN -> cameraManager.directionKeyPressed[DOWN] = isPressed
+            ROTATE_WORLD_AXIS_WITH_MOUSE -> cameraManager.isRotationMovementPressed = isPressed
+            ROTATE_CAMERA_AXIS_WITH_MOUSE -> cameraManager.isCameraRotationMovementPressed = isPressed
             ROTATE_CLOCKWISE_ACTION -> cameraManager.isRotationClockwisePressed = isPressed
             ROTATE_COUNTER_CLOCKWISE_ACTION -> cameraManager.isRotationCounterClockwisePressed = isPressed
         }

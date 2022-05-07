@@ -1,5 +1,6 @@
 package be.encelade.ouistiti
 
+import be.encelade.chimp.tpf.TpfReceiver
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
 import be.encelade.ouistiti.CameraAnalogListener.Companion.ZOOM_IN
@@ -27,7 +28,7 @@ class CameraManager(private val rootNode: Node,
                     flyByCam: FlyByCamera,
                     private val inputManager: InputManager,
                     private var viewMode: ViewMode,
-                    private val cameraSpeedCalculator: CameraSpeedCalculator) {
+                    private val cameraSpeedCalculator: CameraSpeedCalculator) : TpfReceiver {
 
     constructor(app: SimpleApplication,
                 viewMode: ViewMode = ISOMETRIC_VIEW,
@@ -59,8 +60,8 @@ class CameraManager(private val rootNode: Node,
         inputManager.isCursorVisible = true
         flyByCam.isEnabled = false
 
-        inputManager.addListener(actionListener, MOVE_LEFT_ACTION, MOVE_RIGHT_ACTION, MOVE_DOWN_ACTION, MOVE_UP_ACTION,
-                MOUSE_MOVEMENT_ACTION, ROTATE_WORLD_AXIS_ACTION, ROTATE_CAMERA_AXIS_ACTION,
+        inputManager.addListener(actionListener, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN, MOVE_UP,
+                MOUSE_MOVEMENT_ACTION, ROTATE_WORLD_AXIS_WITH_MOUSE, ROTATE_CAMERA_AXIS_WITH_MOUSE,
                 ROTATE_COUNTER_CLOCKWISE_ACTION, ROTATE_CLOCKWISE_ACTION,
                 SWITCH_VIEW_ACTION, TOP_VIEW_ACTION, ISOMETRIC_VIEW_ACTION)
 
@@ -82,22 +83,22 @@ class CameraManager(private val rootNode: Node,
     }
 
     fun addWASDMovementInputMappings() {
-        inputManager.addMapping(MOVE_LEFT_ACTION, KeyTrigger(KEY_A))
-        inputManager.addMapping(MOVE_RIGHT_ACTION, KeyTrigger(KEY_D))
-        inputManager.addMapping(MOVE_UP_ACTION, KeyTrigger(KEY_W))
-        inputManager.addMapping(MOVE_DOWN_ACTION, KeyTrigger(KEY_S))
+        inputManager.addMapping(MOVE_LEFT, KeyTrigger(KEY_A))
+        inputManager.addMapping(MOVE_RIGHT, KeyTrigger(KEY_D))
+        inputManager.addMapping(MOVE_UP, KeyTrigger(KEY_W))
+        inputManager.addMapping(MOVE_DOWN, KeyTrigger(KEY_S))
     }
 
     fun addArrowsMovementInputMappings() {
-        inputManager.addMapping(MOVE_LEFT_ACTION, KeyTrigger(KEY_LEFT))
-        inputManager.addMapping(MOVE_RIGHT_ACTION, KeyTrigger(KEY_RIGHT))
-        inputManager.addMapping(MOVE_UP_ACTION, KeyTrigger(KEY_UP))
-        inputManager.addMapping(MOVE_DOWN_ACTION, KeyTrigger(KEY_DOWN))
+        inputManager.addMapping(MOVE_LEFT, KeyTrigger(KEY_LEFT))
+        inputManager.addMapping(MOVE_RIGHT, KeyTrigger(KEY_RIGHT))
+        inputManager.addMapping(MOVE_UP, KeyTrigger(KEY_UP))
+        inputManager.addMapping(MOVE_DOWN, KeyTrigger(KEY_DOWN))
     }
 
     fun addDefaultRotationInputMappings() {
-        inputManager.addMapping(ROTATE_WORLD_AXIS_ACTION, KeyTrigger(KEY_LCONTROL))
-        inputManager.addMapping(ROTATE_CAMERA_AXIS_ACTION, KeyTrigger(KEY_LSHIFT))
+        inputManager.addMapping(ROTATE_WORLD_AXIS_WITH_MOUSE, KeyTrigger(KEY_LCONTROL))
+        inputManager.addMapping(ROTATE_CAMERA_AXIS_WITH_MOUSE, KeyTrigger(KEY_LSHIFT))
         inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_ACTION, KeyTrigger(KEY_Q))
         inputManager.addMapping(ROTATE_CLOCKWISE_ACTION, KeyTrigger(KEY_E))
     }
@@ -118,11 +119,16 @@ class CameraManager(private val rootNode: Node,
         initCameraNode()
     }
 
-    fun simpleUpdate(tpf: Float) {
-        mouseManager.simpleUpdate()
+    override fun simpleUpdate(tpf: Float) {
+        mouseManager.simpleUpdate(tpf)
         if (mouseManager.isCursorMoving() && isMovementClickPressed) {
             if (isRotationMovementPressed || isCameraRotationMovementPressed) {
-                val delta = if (viewMode == TOP_VIEW) -mouseManager.cursorMovement().y else mouseManager.cursorMovement().x
+                val delta = if (viewMode == TOP_VIEW) {
+                    -mouseManager.cursorMovement().y
+                } else {
+                    mouseManager.cursorMovement().x
+                }
+
                 if (isRotationMovementPressed) {
                     rotateOnWorldAxis(delta * tpf)
                 } else {
@@ -261,13 +267,13 @@ class CameraManager(private val rootNode: Node,
         const val CAMERA_NODE = "CAMERA_NODE"
 
         const val MOUSE_MOVEMENT_ACTION = "MOUSE_MOVEMENT"
-        const val ROTATE_WORLD_AXIS_ACTION = "ROTATE_WORLD"
-        const val ROTATE_CAMERA_AXIS_ACTION = "ROTATE_CAMERA"
+        const val ROTATE_WORLD_AXIS_WITH_MOUSE = "ROTATE_WORLD_WITH_MOUSE"
+        const val ROTATE_CAMERA_AXIS_WITH_MOUSE = "ROTATE_CAMERA_WITH_MOUSE"
 
-        const val MOVE_LEFT_ACTION = "MOVE_LEFT"
-        const val MOVE_RIGHT_ACTION = "MOVE_RIGHT"
-        const val MOVE_UP_ACTION = "MOVE_UP"
-        const val MOVE_DOWN_ACTION = "MOVE_DOWN"
+        const val MOVE_LEFT = "MOVE_LEFT"
+        const val MOVE_RIGHT = "MOVE_RIGHT"
+        const val MOVE_UP = "MOVE_UP"
+        const val MOVE_DOWN = "MOVE_DOWN"
 
         const val ROTATE_COUNTER_CLOCKWISE_ACTION = "ROTATE_COUNTER_CLOCKWISE"
         const val ROTATE_CLOCKWISE_ACTION = "ROTATE_CLOCKWISE"
