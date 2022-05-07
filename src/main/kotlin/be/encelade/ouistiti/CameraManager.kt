@@ -3,6 +3,18 @@ package be.encelade.ouistiti
 import be.encelade.chimp.tpf.TpfReceiver
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
+import be.encelade.ouistiti.CameraActionListener.Companion.ISOMETRIC_VIEW_ACTION
+import be.encelade.ouistiti.CameraActionListener.Companion.MOUSE_MOVEMENT_ACTION
+import be.encelade.ouistiti.CameraActionListener.Companion.MOVE_DOWN
+import be.encelade.ouistiti.CameraActionListener.Companion.MOVE_LEFT
+import be.encelade.ouistiti.CameraActionListener.Companion.MOVE_RIGHT
+import be.encelade.ouistiti.CameraActionListener.Companion.MOVE_UP
+import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_CAMERA_AXIS_WITH_MOUSE
+import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_CLOCKWISE
+import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_COUNTER_CLOCKWISE
+import be.encelade.ouistiti.CameraActionListener.Companion.ROTATE_WORLD_AXIS_WITH_MOUSE
+import be.encelade.ouistiti.CameraActionListener.Companion.SWITCH_VIEW_ACTION
+import be.encelade.ouistiti.CameraActionListener.Companion.TOP_VIEW_ACTION
 import be.encelade.ouistiti.CameraAnalogListener.Companion.ZOOM_IN
 import be.encelade.ouistiti.CameraAnalogListener.Companion.ZOOM_OUT
 import be.encelade.ouistiti.ViewMode.ISOMETRIC_VIEW
@@ -62,7 +74,7 @@ class CameraManager(private val rootNode: Node,
 
         inputManager.addListener(actionListener, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN, MOVE_UP,
                 MOUSE_MOVEMENT_ACTION, ROTATE_WORLD_AXIS_WITH_MOUSE, ROTATE_CAMERA_AXIS_WITH_MOUSE,
-                ROTATE_COUNTER_CLOCKWISE_ACTION, ROTATE_CLOCKWISE_ACTION,
+                ROTATE_COUNTER_CLOCKWISE, ROTATE_CLOCKWISE,
                 SWITCH_VIEW_ACTION, TOP_VIEW_ACTION, ISOMETRIC_VIEW_ACTION)
 
         inputManager.addListener(analogListener, ZOOM_IN, ZOOM_OUT)
@@ -99,8 +111,8 @@ class CameraManager(private val rootNode: Node,
     fun addDefaultRotationInputMappings() {
         inputManager.addMapping(ROTATE_WORLD_AXIS_WITH_MOUSE, KeyTrigger(KEY_LCONTROL))
         inputManager.addMapping(ROTATE_CAMERA_AXIS_WITH_MOUSE, KeyTrigger(KEY_LSHIFT))
-        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_ACTION, KeyTrigger(KEY_Q))
-        inputManager.addMapping(ROTATE_CLOCKWISE_ACTION, KeyTrigger(KEY_E))
+        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE, KeyTrigger(KEY_Q))
+        inputManager.addMapping(ROTATE_CLOCKWISE, KeyTrigger(KEY_E))
     }
 
     fun addDefaultSwitchViewInputMappings() {
@@ -264,22 +276,6 @@ class CameraManager(private val rootNode: Node,
     companion object {
 
         const val CAMERA_NODE = "CAMERA_NODE"
-
-        const val MOUSE_MOVEMENT_ACTION = "MOUSE_MOVEMENT"
-        const val ROTATE_WORLD_AXIS_WITH_MOUSE = "ROTATE_WORLD_WITH_MOUSE"
-        const val ROTATE_CAMERA_AXIS_WITH_MOUSE = "ROTATE_CAMERA_WITH_MOUSE"
-
-        const val MOVE_LEFT = "MOVE_LEFT"
-        const val MOVE_RIGHT = "MOVE_RIGHT"
-        const val MOVE_UP = "MOVE_UP"
-        const val MOVE_DOWN = "MOVE_DOWN"
-
-        const val ROTATE_COUNTER_CLOCKWISE_ACTION = "ROTATE_COUNTER_CLOCKWISE"
-        const val ROTATE_CLOCKWISE_ACTION = "ROTATE_CLOCKWISE"
-
-        const val SWITCH_VIEW_ACTION = "SWITCH_VIEW"
-        const val TOP_VIEW_ACTION = "TOP_VIEW"
-        const val ISOMETRIC_VIEW_ACTION = "ISOMETRIC_VIEW"
 
         // TODO: also make those configurable
         const val MIN_Z = 2

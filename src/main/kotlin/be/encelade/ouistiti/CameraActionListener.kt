@@ -1,17 +1,5 @@
 package be.encelade.ouistiti
 
-import be.encelade.ouistiti.CameraManager.Companion.ISOMETRIC_VIEW_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.MOUSE_MOVEMENT_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_DOWN
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_LEFT
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_RIGHT
-import be.encelade.ouistiti.CameraManager.Companion.MOVE_UP
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CAMERA_AXIS_WITH_MOUSE
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_CLOCKWISE_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_COUNTER_CLOCKWISE_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.ROTATE_WORLD_AXIS_WITH_MOUSE
-import be.encelade.ouistiti.CameraManager.Companion.SWITCH_VIEW_ACTION
-import be.encelade.ouistiti.CameraManager.Companion.TOP_VIEW_ACTION
 import be.encelade.ouistiti.Direction.*
 import be.encelade.ouistiti.ViewMode.ISOMETRIC_VIEW
 import be.encelade.ouistiti.ViewMode.TOP_VIEW
@@ -28,8 +16,8 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
             MOVE_DOWN -> cameraManager.pressedDirectionKeysMap[DOWN] = isPressed
             ROTATE_WORLD_AXIS_WITH_MOUSE -> cameraManager.isRotationMovementPressed = isPressed
             ROTATE_CAMERA_AXIS_WITH_MOUSE -> cameraManager.isCameraRotationMovementPressed = isPressed
-            ROTATE_CLOCKWISE_ACTION -> cameraManager.isRotationClockwisePressed = isPressed
-            ROTATE_COUNTER_CLOCKWISE_ACTION -> cameraManager.isRotationCounterClockwisePressed = isPressed
+            ROTATE_CLOCKWISE -> cameraManager.isRotationClockwisePressed = isPressed
+            ROTATE_COUNTER_CLOCKWISE -> cameraManager.isRotationCounterClockwisePressed = isPressed
         }
 
         if (isPressed) {
@@ -39,6 +27,26 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
                 ISOMETRIC_VIEW_ACTION -> cameraManager.switchViewMode(ISOMETRIC_VIEW)
             }
         }
+    }
+
+    companion object {
+
+        const val MOUSE_MOVEMENT_ACTION = "MOUSE_MOVEMENT"
+        const val ROTATE_WORLD_AXIS_WITH_MOUSE = "ROTATE_WORLD_WITH_MOUSE"
+        const val ROTATE_CAMERA_AXIS_WITH_MOUSE = "ROTATE_CAMERA_WITH_MOUSE"
+
+        const val MOVE_LEFT = "MOVE_LEFT"
+        const val MOVE_RIGHT = "MOVE_RIGHT"
+        const val MOVE_UP = "MOVE_UP"
+        const val MOVE_DOWN = "MOVE_DOWN"
+
+        const val ROTATE_COUNTER_CLOCKWISE = "ROTATE_COUNTER_CLOCKWISE"
+        const val ROTATE_CLOCKWISE = "ROTATE_CLOCKWISE"
+
+        const val SWITCH_VIEW_ACTION = "SWITCH_VIEW"
+        const val TOP_VIEW_ACTION = "TOP_VIEW"
+        const val ISOMETRIC_VIEW_ACTION = "ISOMETRIC_VIEW"
+
     }
 
 }
