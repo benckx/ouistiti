@@ -2,8 +2,8 @@ package be.encelade.ouistiti
 
 import be.encelade.chimp.utils.VectorOperatorUtils.plus
 import be.encelade.chimp.utils.VectorOperatorUtils.times
-import be.encelade.ouistiti.CameraAnalogListener.Companion.WHEEL_DOWN
-import be.encelade.ouistiti.CameraAnalogListener.Companion.WHEEL_UP
+import be.encelade.ouistiti.CameraAnalogListener.Companion.ZOOM_IN
+import be.encelade.ouistiti.CameraAnalogListener.Companion.ZOOM_OUT
 import be.encelade.ouistiti.ViewMode.ISOMETRIC_VIEW
 import be.encelade.ouistiti.ViewMode.TOP_VIEW
 import com.jme3.app.SimpleApplication
@@ -64,7 +64,7 @@ class CameraManager(private val rootNode: Node,
                 ROTATE_COUNTER_CLOCKWISE_ACTION, ROTATE_CLOCKWISE_ACTION,
                 SWITCH_VIEW_ACTION, TOP_VIEW_ACTION, ISOMETRIC_VIEW_ACTION)
 
-        inputManager.addListener(analogListener, WHEEL_UP, WHEEL_DOWN)
+        inputManager.addListener(analogListener, ZOOM_IN, ZOOM_OUT)
 
         Direction.values().forEach { direction -> directionKeyPressed[direction] = false }
     }
@@ -98,8 +98,8 @@ class CameraManager(private val rootNode: Node,
     fun addDefaultRotationInputMappings() {
         inputManager.addMapping(ROTATE_WORLD_AXIS_ACTION, KeyTrigger(KEY_LCONTROL))
         inputManager.addMapping(ROTATE_CAMERA_AXIS_ACTION, KeyTrigger(KEY_LSHIFT))
-        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_ACTION, KeyTrigger(KEY_B))
-        inputManager.addMapping(ROTATE_CLOCKWISE_ACTION, KeyTrigger(KEY_N))
+        inputManager.addMapping(ROTATE_COUNTER_CLOCKWISE_ACTION, KeyTrigger(KEY_Q))
+        inputManager.addMapping(ROTATE_CLOCKWISE_ACTION, KeyTrigger(KEY_E))
     }
 
     fun addDefaultSwitchViewInputMappings() {
@@ -109,8 +109,8 @@ class CameraManager(private val rootNode: Node,
     }
 
     fun addDefaultMouseWheelInputMappings() {
-        inputManager.addMapping(WHEEL_UP, MouseAxisTrigger(AXIS_WHEEL, false))
-        inputManager.addMapping(WHEEL_DOWN, MouseAxisTrigger(AXIS_WHEEL, true))
+        inputManager.addMapping(ZOOM_IN, MouseAxisTrigger(AXIS_WHEEL, false))
+        inputManager.addMapping(ZOOM_OUT, MouseAxisTrigger(AXIS_WHEEL, true))
     }
 
     fun switchViewMode(newMode: ViewMode = viewMode.next()) {
@@ -184,7 +184,7 @@ class CameraManager(private val rootNode: Node,
      * Rotate [CameraNode] on its Z axis, without changing the value of "cameraAngleZ"
      */
     private fun rotateCameraOnAxisZ(angle: Float) {
-        val baseRotation = initRotation[viewMode]!!
+        val baseRotation = initRotationMap[viewMode]!!
         val revertBaseRotation = baseRotation * -1f
 
         cameraNode.rotate(revertBaseRotation.x, revertBaseRotation.y, 0f)
@@ -232,7 +232,7 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun initRotation() {
-        val initRotation = initRotation[viewMode]!!
+        val initRotation = initRotationMap[viewMode]!!
         cameraNode.rotate(initRotation.x, initRotation.y, initRotation.z)
 
         if (viewMode == ISOMETRIC_VIEW) {
@@ -241,7 +241,7 @@ class CameraManager(private val rootNode: Node,
     }
 
     private fun initLocation() {
-        val initLocation = initLocation[viewMode]!!
+        val initLocation = initLocationMap[viewMode]!!
         cameraNode.localTranslation = initLocation
     }
 
@@ -282,12 +282,12 @@ class CameraManager(private val rootNode: Node,
 
         private val topViewInitRotation = Vector3f(PI, 0f, PI)
 
-        private val initRotation = mapOf(
+        private val initRotationMap = mapOf(
                 TOP_VIEW to topViewInitRotation + Vector3f(0f, 0f, 0f),
                 ISOMETRIC_VIEW to topViewInitRotation + Vector3f(-QUARTER_PI, 0f, 0f)
         )
 
-        private val initLocation = mapOf(
+        private val initLocationMap = mapOf(
                 TOP_VIEW to Vector3f(0f, 0f, 20f),
                 ISOMETRIC_VIEW to Vector3f(-15f, -15f, 18f)
         )

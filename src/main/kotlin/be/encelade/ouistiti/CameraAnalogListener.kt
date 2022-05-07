@@ -6,16 +6,16 @@ class CameraAnalogListener(private val cameraManager: CameraManager) : AnalogLis
 
     override fun onAnalog(name: String?, value: Float, tpf: Float) {
         when (name) {
-            WHEEL_UP -> cameraManager.cameraZoom(-value)
-            WHEEL_DOWN -> cameraManager.cameraZoom(value)
+            ZOOM_IN -> cameraManager.cameraZoom(-value)
+            ZOOM_OUT -> cameraManager.cameraZoom(value)
             else -> println("Unknown $name")
         }
     }
 
     companion object {
 
-        const val WHEEL_UP = "WHEEL_UP"
-        const val WHEEL_DOWN = "WHEEL_DOWN"
+        const val ZOOM_IN = "ZOOM_IN"
+        const val ZOOM_OUT = "ZOOM_OUT"
 
     }
 

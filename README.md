@@ -23,7 +23,7 @@ project *<a href="https://benckx.itch.io/elb">Everybody Loves Bricks</a>*.
 * Zoom in and out with the mouse wheel
 * Two view modes: Top view and "Isometric" view
 * Switch view with **V** (or use **T** for Top View, **I** for Isometric View)
-* Rotate with **B** (counter-clockwise) and **N** (clockwise) on "world axis" (i.e. from player's perspective, the world
+* Rotate with **Q** (counter-clockwise) and **E** (clockwise) on "world axis" (i.e. from player's perspective, the world
   rotates)
 * Rotate on "world axis" by holding right click + keep left Control pressed
 * Rotate on camera axis (from player's perspective, camera rotates on its axis like a security camera) by holding right
@@ -139,6 +139,7 @@ interface CameraSpeedCalculator {
 
 * Upgrade Kotlin from `1.5.21` to `1.6.21`
 * Upgrade [jMonkeyEngine3](https://jmonkeyengine.org/) from `3.4.0-stable` to `3.5.2-stable`
+* Change rotation keys from `B`, `N` to `Q`, `E` (closer to the WASD).
 
 ## Version 2.0
 
