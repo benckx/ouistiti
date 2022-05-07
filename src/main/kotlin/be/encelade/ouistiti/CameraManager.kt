@@ -45,7 +45,7 @@ class CameraManager(private val rootNode: Node,
     internal var isRotationClockwisePressed = false
     internal var isRotationCounterClockwisePressed = false
 
-    internal val directionKeyPressed = mutableMapOf<Direction, Boolean>()
+    internal val pressedDirectionKeysMap = mutableMapOf<Direction, Boolean>()
 
     private val actionListener = CameraActionListener(this)
     private val analogListener = CameraAnalogListener(this)
@@ -67,7 +67,7 @@ class CameraManager(private val rootNode: Node,
 
         inputManager.addListener(analogListener, ZOOM_IN, ZOOM_OUT)
 
-        Direction.values().forEach { direction -> directionKeyPressed[direction] = false }
+        Direction.values().forEach { direction -> pressedDirectionKeysMap[direction] = false }
     }
 
     fun addDefaultKeyMappings() {
@@ -123,10 +123,9 @@ class CameraManager(private val rootNode: Node,
         mouseManager.simpleUpdate(tpf)
         if (mouseManager.isCursorMoving() && isMovementClickPressed) {
             if (isRotationMovementPressed || isCameraRotationMovementPressed) {
-                val delta = if (viewMode == TOP_VIEW) {
-                    -mouseManager.cursorMovement().y
-                } else {
-                    mouseManager.cursorMovement().x
+                val delta = when (viewMode) {
+                    TOP_VIEW -> -mouseManager.cursorMovement().y
+                    ISOMETRIC_VIEW -> mouseManager.cursorMovement().x
                 }
 
                 if (isRotationMovementPressed) {
@@ -142,11 +141,11 @@ class CameraManager(private val rootNode: Node,
         } else if (!isRotationClockwisePressed && isRotationCounterClockwisePressed) {
             rotateOnWorldAxis(-cameraSpeedCalculator.cameraRotationSpeed(cameraNode) * tpf)
         } else {
-            directionKeyPressed
-                    .filter { directionKeyPressed -> directionKeyPressed.value }
+            pressedDirectionKeysMap
+                    .filter { mapping -> mapping.value }
                     .keys
-                    .forEach { direction ->
-                        val directionalMovement = rotateForCurrentAngle(direction.vector * tpf)
+                    .forEach { pressedDirection ->
+                        val directionalMovement = rotateForCurrentAngle(pressedDirection.vector * tpf)
                         val speed = cameraSpeedCalculator.keysMovementSpeed(cameraNode)
                         cameraNode.move(directionalMovement * speed)
                     }

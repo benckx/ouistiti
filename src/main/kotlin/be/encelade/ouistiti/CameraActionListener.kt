@@ -22,10 +22,10 @@ class CameraActionListener(private val cameraManager: CameraManager) : ActionLis
     override fun onAction(name: String?, isPressed: Boolean, tpf: Float) {
         when (name) {
             MOUSE_MOVEMENT_ACTION -> cameraManager.isMovementClickPressed = isPressed
-            MOVE_LEFT -> cameraManager.directionKeyPressed[LEFT] = isPressed
-            MOVE_RIGHT -> cameraManager.directionKeyPressed[RIGHT] = isPressed
-            MOVE_UP -> cameraManager.directionKeyPressed[UP] = isPressed
-            MOVE_DOWN -> cameraManager.directionKeyPressed[DOWN] = isPressed
+            MOVE_LEFT -> cameraManager.pressedDirectionKeysMap[LEFT] = isPressed
+            MOVE_RIGHT -> cameraManager.pressedDirectionKeysMap[RIGHT] = isPressed
+            MOVE_UP -> cameraManager.pressedDirectionKeysMap[UP] = isPressed
+            MOVE_DOWN -> cameraManager.pressedDirectionKeysMap[DOWN] = isPressed
             ROTATE_WORLD_AXIS_WITH_MOUSE -> cameraManager.isRotationMovementPressed = isPressed
             ROTATE_CAMERA_AXIS_WITH_MOUSE -> cameraManager.isCameraRotationMovementPressed = isPressed
             ROTATE_CLOCKWISE_ACTION -> cameraManager.isRotationClockwisePressed = isPressed
