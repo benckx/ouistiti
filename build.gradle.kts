@@ -23,3 +23,7 @@ dependencies {
 
     testImplementation(libs.jme.lwjgl3)
 }
+
+tasks.test {
+    failOnNoDiscoveredTests = false
+}
