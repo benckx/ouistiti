@@ -162,6 +162,10 @@ interface CameraSpeedCalculator {
 * Update Kotlin from 1.4.10 to 1.4.20
 * Add more customizations settings (split `CameraSpeedCalculator`, split the different default key mappings, etc.)
 
+# License
+
+This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0).
+
 # Related Projects
 
 * **ouistiti**: A basic camera manager for management/strategy games:<br/>
