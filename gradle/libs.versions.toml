@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.6.21"
 benManesVersions = "0.42.0"
-jme = "3.5.2-stable"
+jme = "3.9.0-stable"
 chimpUtils = "1.7.0"
 
 [libraries]
