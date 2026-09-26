@@ -1,8 +1,4 @@
-<a href="https://paypal.me/benckx/2">
-<img src="https://img.shields.io/badge/Donate-PayPal-green.svg"/>
-</a>
-
-[![Build](https://github.com/benckx/ouistiti/actions/workflows/build.yml/badge.svg)](https://github.com/benckx/ouistiti/actions/workflows/build.yml) [![](https://www.jitpack.io/v/benckx/ouistiti.svg)](https://www.jitpack.io/#benckx/ouistiti)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/benckx/2) [![Build](https://github.com/benckx/ouistiti/actions/workflows/build.yml/badge.svg)](https://github.com/benckx/ouistiti/actions/workflows/build.yml) [![](https://www.jitpack.io/v/benckx/ouistiti.svg)](https://www.jitpack.io/#benckx/ouistiti)
 
 # About
 
