@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.4.10"
+kotlin = "2.4.20"
 benManesVersions = "0.64.0"
 jme = "3.9.0-stable"
 chimpUtils = "1.7.0"

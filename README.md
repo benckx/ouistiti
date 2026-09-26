@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.benckx:ouistiti:2.1.1"
+    compile "com.github.benckx:ouistiti:2.2.0"
 }
 ```
 
@@ -102,12 +102,12 @@ public static class DemoSimpleApp extends SimpleApplication {
 
 ## In Kotlin
 
-https://github.com/benckx/ouistiti/blob/master/src/test/kotlin/Demo.kt
+https://github.com/benckx/ouistiti/blob/main/src/test/kotlin/Demo.kt
 
 ## In Java
 
 In a separate Java only sample project:<br/>
-https://github.com/benckx/ouistiti-java-sample/blob/master/src/test/java/TestCameraManagerJava.java
+https://github.com/benckx/ouistiti-java-sample/blob/main/src/test/java/TestCameraManagerJava.java
 
 # Configuration
 
@@ -134,6 +134,13 @@ interface CameraSpeedCalculator {
 ```
 
 # Change log
+
+## Version 2.2.0
+
+* Upgrade Kotlin from `1.6.21` to `2.4.20`
+* Upgrade [jMonkeyEngine3](https://jmonkeyengine.org/) from `3.5.2-stable` to `3.9.0-stable`
+* Upgrade Gradle wrapper from `7.4.2` to `9.7.1`
+* Update build tooling and GitHub Actions dependencies
 
 ## Version 2.1.1
 
