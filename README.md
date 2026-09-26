@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.benckx:ouistiti:2.2.1"
+    compile "com.github.benckx:ouistiti:2.2.2"
 }
 ```
 
@@ -132,6 +132,10 @@ interface CameraSpeedCalculator {
 ```
 
 # Change log
+
+## Version 2.2.2
+
+* Upgrade [chimp-utils](https://github.com/benckx/chimp-utils) from `1.7.0` to `1.8.0`
 
 ## Version 2.2.1
 
