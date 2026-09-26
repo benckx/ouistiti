@@ -2,6 +2,8 @@
 <img src="https://img.shields.io/badge/Donate-PayPal-green.svg"/>
 </a>
 
+[![Build](https://github.com/benckx/ouistiti/actions/workflows/build.yml/badge.svg)](https://github.com/benckx/ouistiti/actions/workflows/build.yml) [![](https://www.jitpack.io/v/benckx/ouistiti.svg)](https://www.jitpack.io/#benckx/ouistiti)
+
 # About
 
 A basic camera system for 3D management/strategy games for <a href="https://jmonkeyengine.org">jMonkeyEngine</a>
