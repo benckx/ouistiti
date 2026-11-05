@@ -15,4 +15,4 @@ chimp-utils-jme3 = { module = "com.github.benckx.chimp-utils:chimp-utils-jme3", 
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-versions = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
+versions = { id = "io.github.ben-manes.versions", version.ref = "benManesVersions" }
